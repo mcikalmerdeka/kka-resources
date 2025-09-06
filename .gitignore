@@ -5,6 +5,7 @@ build/
 dist/
 wheels/
 *.egg-info
+__init__.py
 
 # Virtual environments
 .venv
@@ -12,5 +13,12 @@ wheels/
 # uv files
 .python-version
 
+# environment variables
+.env
+.env.local
+
 # reference files
 reference/
+
+# Chroma files
+chroma_db/
