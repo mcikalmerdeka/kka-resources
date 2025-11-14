@@ -7,6 +7,22 @@ wheels/
 *.egg-info
 __init__.py
 
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Google Colab temp files
+*.ipynb_local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
 # Virtual environments
 .venv
 
@@ -29,3 +45,6 @@ models/
 
 # Gradio files
 .gradio/
+
+# Backend service (deployed separately)
+llm-proxy/
