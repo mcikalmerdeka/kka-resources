@@ -22,3 +22,9 @@ reference/
 
 # Chroma files
 chroma_db/
+
+# Locally Downloaded Models
+models/
+
+# Gradio files
+.gradio/
