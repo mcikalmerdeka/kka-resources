@@ -1238,6 +1238,9 @@ wheels = [
 ]
 
 [package.optional-dependencies]
+hf-xet = [
+    { name = "hf-xet" },
+]
 inference = [
     { name = "aiohttp" },
 ]
@@ -1514,7 +1517,7 @@ dependencies = [
     { name = "compressed-tensors" },
     { name = "dotenv" },
     { name = "gradio" },
-    { name = "huggingface-hub" },
+    { name = "huggingface-hub", extra = ["hf-xet"] },
     { name = "ipykernel" },
     { name = "llama-cpp-python" },
     { name = "pydantic-ai" },
@@ -1531,7 +1534,7 @@ requires-dist = [
     { name = "compressed-tensors", specifier = ">=0.12.2" },
     { name = "dotenv", specifier = ">=0.9.9" },
     { name = "gradio", specifier = ">=5.49.1" },
-    { name = "huggingface-hub", specifier = ">=0.34.4" },
+    { name = "huggingface-hub", extras = ["hf-xet"], specifier = ">=0.34.4" },
     { name = "ipykernel", specifier = ">=6.30.1" },
     { name = "llama-cpp-python", specifier = ">=0.3.16" },
     { name = "pydantic-ai", specifier = ">=1.17.0" },
