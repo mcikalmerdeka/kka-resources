@@ -34,8 +34,7 @@ Thumbs.db
 .env.local
 
 # reference files
-reference/
-additional_info.txt
+others/
 
 # Chroma files
 chroma_db/
