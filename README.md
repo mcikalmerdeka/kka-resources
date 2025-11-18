@@ -58,21 +58,27 @@ Koding-dan-Kecerdasan-Artificial/
 │   ├── 03_code_explainer.ipynb      # Programming code explanations
 │   ├── 04_math_tutor.ipynb          # Math problem solving
 │   ├── 05_language_translator.ipynb # Language translation
-│   └── 06_quiz_generator.ipynb      # Educational quiz creation
+│   ├── 06_quiz_generator.ipynb      # Educational quiz creation
+│   └── 07_animal_guessing_game.ipynb # Animal guessing game
 │
 ├── 🔧 backend/                      # FastAPI backend service
-│   ├── main.py                      # API endpoints
+│   ├── main.py                      # API endpoints & app configuration
+│   ├── middleware.py                # API key authentication
+│   ├── models.py                    # Request/response models
+│   ├── logger.py                    # Logging configuration
+│   ├── routers/                     # API route handlers
+│   │   └── chat.py                  # Chat endpoints (elementary/middle/highschool)
+│   ├── prompts/                     # Educational system prompts
 │   ├── requirements.txt             # Python dependencies
 │   ├── Dockerfile                   # Container configuration
-│   └── deploy.ps1                   # Deployment script
+│   ├── deploy.ps1                   # Deployment script
+│   └── README.md                    # Backend documentation
 │
 ├── 📚 docs/                         # Documentation
 │   ├── teacher_guide.md             # Teacher usage guide
 │   └── troubleshooting.md           # Common issues & solutions
 │
 ├── 🧪 experiments/                  # Development & testing notebooks
-│   ├── chatbot_application.ipynb    # Original prototype
-│   ├── notebook_experiments.ipynb   # Various experiments
 │   ├── test_api.ipynb              # API testing
 │   └── open_source_models.ipynb    # Model comparisons
 │
@@ -82,13 +88,8 @@ Koding-dan-Kecerdasan-Artificial/
 │   ├── kka-reference/              # Official curriculum PDFs
 │   └── technical/                   # Technical documentation
 │
-├── 🛠️ utils/                        # Utility scripts
-│   ├── preprocess_document.py       # Document processing
-│   └── vdb_ingestion.py            # Vector DB utilities
-│
 └── 📄 Project Files
     ├── README.md                    # This file
-    ├── PROJECT_STRUCTURE.md         # Detailed structure guide
     ├── pyproject.toml              # Python project config
     ├── LICENSE                      # MIT License
     └── .gitignore                   # Git ignore rules
@@ -97,7 +98,7 @@ Koding-dan-Kecerdasan-Artificial/
 ### Key Folders
 
 - **`/app`**: Production-ready notebooks for students and teachers. Start here!
-- **`/backend`**: Centralized FastAPI service that manages AI API calls with rate limiting (⚠️ **Note**: Backend is privately managed and deployed. This folder is for reference only and will be ignored in the public repo)
+- **`/backend`**: Centralized FastAPI service with API key authentication, rate limiting, and educational optimizations. See [backend/README.md](backend/README.md) for deployment and API documentation.
 - **`/docs`**: Comprehensive guides for teachers and troubleshooting
 - **`/experiments`**: Development and testing work (not for production use)
 - **`/others`**: Official Indonesian curriculum PDFs and technical references
@@ -143,28 +144,38 @@ These applications are designed to support the official Indonesian AI curriculum
 │  Google Colab       │  ← Students/Teachers use notebooks (free!)
 │  (Free Notebooks)   │
 └──────────┬──────────┘
-           │ HTTP Request
+           │ HTTP Request (with X-API-Key header)
            ↓
 ┌─────────────────────┐
-│  FastAPI Backend    │  ← Privately managed (Google Cloud Run)
-│  (Rate Limited)     │     • Rate limiting: 10 req/min
-└──────────┬──────────┘     • API key managed by maintainer
-           │ API Call       • No data storage
-           ↓
+│  FastAPI Backend    │  ← Deployed on Google Cloud Run
+│  (Rate Limited)     │     • API key authentication
+└──────────┬──────────┘     • Rate limiting: 10 req/min per IP
+           │ API Call       • Conversation memory support
+           ↓                • No data storage
 ┌─────────────────────┐
-│  OpenAI API         │  ← GPT-4o-mini (cheap & effective)
-│  (gpt-4o-mini)      │
+│  OpenAI API         │  ← GPT-4.1-mini (cost-effective & capable)
+│  (gpt-4.1-mini)     │
 └─────────────────────┘
 ```
 
 ### Why This Architecture?
 
-- **Teachers/students don't need API keys** (backend is privately managed)
-- **Cost-effective** (shared backend, efficient model)
-- **Safe** (rate limiting prevents abuse)
-- **Simple** (just notebooks, no complex setup)
+- **Secure**: API key authentication prevents unauthorized access
+- **Cost-effective**: Shared backend with efficient gpt-4o-mini model
+- **Safe**: Rate limiting prevents abuse, no conversation storage
+- **Educational**: Age-appropriate system prompts for each phase
+- **Simple**: Students just run notebooks with obfuscated credentials
 
-> **Note**: The backend service runs on Google Cloud Run and is privately managed by the maintainer. The `/backend` folder in this repo is for reference only and will not be included in public releases.
+### Backend Features
+
+- ✅ **API Key Authentication**: Secure X-API-Key header validation
+- ✅ **Rate Limiting**: 10 requests/minute per IP address
+- ✅ **Educational Endpoints**: Optimized prompts for elementary, middle, and high school
+- ✅ **Conversation Memory**: Support for multi-turn conversations
+- ✅ **No Data Storage**: Privacy-first, stateless design
+- ✅ **Cloud-Ready**: Docker container deployable to Google Cloud Run
+
+> **Note**: The backend can be deployed by educators who want their own instance. See [backend/README.md](backend/README.md) for deployment instructions, API documentation, and Colab integration guide.
 
 ---
 
@@ -260,9 +271,16 @@ cd your-repo
 
 # Test notebooks locally
 jupyter notebook app/
+
+# Run backend locally (optional)
+cd backend
+pip install -r requirements.txt
+export OPENAI_API_KEY=your-key
+export API_KEY=your-backend-key
+uvicorn main:app --reload
 ```
 
-> **Note**: The backend is privately managed by the maintainer and deployed on Google Cloud Run. You can use the existing backend endpoint for development, or set up your own backend if you need to modify the API behavior.
+**Backend Development**: The backend code is included in this repository. You can deploy your own instance or contribute improvements. See [backend/README.md](backend/README.md) for local development and deployment instructions.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
@@ -297,13 +315,31 @@ POST /chat/highschool    # High school-optimized responses
 
 ### Backend Details
 
-The backend is privately managed and deployed on Google Cloud Run by the maintainer. For backend documentation including API usage, endpoints, and integration details, contact the maintainer.
+The backend is a FastAPI service that can be deployed to Google Cloud Run. Full documentation available in [backend/README.md](backend/README.md).
 
-If you need to deploy your own backend instance:
+**Key Features**:
 
-- Backend code is provided for reference (not included in public releases)
-- See maintainer for setup instructions
-- Requires your own OpenAI API key and Google Cloud account
+- API key authentication via `X-API-Key` header
+- Rate limiting (10 req/min per IP)
+- Age-appropriate educational prompts
+- Conversation memory support
+- Cost optimization (~$0.0002 per request)
+
+**Deploying Your Own**:
+
+```bash
+cd backend
+# Set environment variables
+export OPENAI_API_KEY=your-openai-key
+export API_KEY=your-backend-api-key
+
+# Deploy to Cloud Run
+gcloud run deploy educational-llm-proxy \
+  --source . \
+  --set-env-vars OPENAI_API_KEY=$OPENAI_API_KEY,API_KEY=$API_KEY
+```
+
+See [backend/README.md](backend/README.md) for complete deployment guide, API documentation, and Colab integration instructions.
 
 ---
 
@@ -390,11 +426,3 @@ https://github.com/yourusername/your-repo
 If you find this project useful, please give it a star! It helps others discover these educational tools.
 
 ---
-
-<div align="center">
-
-**Made with ❤️ for Indonesian Education**
-
-[⬆ Back to Top](#-koding-dan-kecerdasan-artificial---ai-education-applications)
-
-</div>
