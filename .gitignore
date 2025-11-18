@@ -65,13 +65,14 @@ assets/screenshots/*.tmp
 others/
 utils/
 INSTRUCTIONS.md
+test.py
 
 # Cloud
 .gcloud/
 .firebase/
 
 # Ignore backend folder
-backend/
+# backend/
 
 # Gradio files
 .gradio/
