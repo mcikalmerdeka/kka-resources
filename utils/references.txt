@@ -1,2 +1,0 @@
-PDF Text Conversion with RAG and Vector Databases
-https://claude.ai/chat/777092b7-393a-4b76-85ac-724508dba4c6
