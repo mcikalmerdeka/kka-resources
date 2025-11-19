@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Code, Send, Loader2, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { chatService } from '@/lib/api';
@@ -22,6 +22,13 @@ export default function CodeExplainerPage() {
   const [level, setLevel] = useState('Simple');
   const [explanation, setExplanation] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const hiddenInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (hiddenInputRef.current) {
+      hiddenInputRef.current.setCustomValidity('');
+    }
+  }, [code]);
 
   const languages = ["Python", "JavaScript", "Java", "C++", "HTML/CSS"];
   const levels = ["Simple", "Detailed", "Advanced"];
@@ -118,13 +125,13 @@ ${detailInstructions[level]}. Jelaskan:
                   <div className="h-full font-mono text-sm relative">
                     {/* Hidden input for HTML5 form validation */}
                     <input 
+                      ref={hiddenInputRef}
                       type="text" 
                       value={code} 
                       onChange={() => {}} 
                       required 
                       className="absolute opacity-0 w-px h-px -z-10"
                       onInvalid={(e) => (e.target as HTMLInputElement).setCustomValidity('Mohon masukkan kode yang ingin dijelaskan')}
-                      onInput={(e) => (e.target as HTMLInputElement).setCustomValidity('')}
                     />
                     <Editor
                       value={code}
