@@ -37,12 +37,16 @@ async def chat(chat_request: ChatRequest):
     
     try:
         # Initialize tools
-        from tools.search import TavilySearchTool
-        import json
-        
-        search_tool = TavilySearchTool()
-        tools = [search_tool.get_definition()]
-        available_tools = {"web_search": search_tool.execute}
+        tools = None
+        tool_choice = None
+        available_tools = {}
+
+        if chat_request.use_search:
+            from tools.search import TavilySearchTool
+            search_tool = TavilySearchTool()
+            tools = [search_tool.get_definition()]
+            available_tools = {"web_search": search_tool.execute}
+            tool_choice = "auto"
 
         # Build messages array
         messages = []
@@ -70,7 +74,7 @@ async def chat(chat_request: ChatRequest):
                     "max_tokens": chat_request.max_tokens,
                     "temperature": chat_request.temperature,
                     "tools": tools,
-                    "tool_choice": "auto"
+                    "tool_choice": tool_choice
                 },
                 timeout=30.0
             )
