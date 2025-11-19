@@ -40,4 +40,5 @@ gcloud run deploy llm-proxy `
   --allow-unauthenticated `
   --set-env-vars OPENAI_API_KEY=$env:OPENAI_API_KEY `
   --set-env-vars API_KEY=$env:API_KEY `
+  --set-env-vars TAVILY_API_KEY=$env:TAVILY_API_KEY `
   --platform managed

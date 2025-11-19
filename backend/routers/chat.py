@@ -36,6 +36,14 @@ async def chat(chat_request: ChatRequest):
         raise HTTPException(status_code=500, detail="OpenAI API key not configured")
     
     try:
+        # Initialize tools
+        from tools.search import TavilySearchTool
+        import json
+        
+        search_tool = TavilySearchTool()
+        tools = [search_tool.get_definition()]
+        available_tools = {"web_search": search_tool.execute}
+
         # Build messages array
         messages = []
         if chat_request.system_message:
@@ -48,7 +56,7 @@ async def chat(chat_request: ChatRequest):
         # Add current user message
         messages.append({"role": "user", "content": chat_request.prompt})
         
-        # Call OpenAI API
+        # Call OpenAI API (First Call)
         async with httpx.AsyncClient() as client:
             response = await client.post(
                 "https://api.openai.com/v1/chat/completions",
@@ -60,13 +68,57 @@ async def chat(chat_request: ChatRequest):
                     "model": chat_request.model,
                     "messages": messages,
                     "max_tokens": chat_request.max_tokens,
-                    "temperature": chat_request.temperature
+                    "temperature": chat_request.temperature,
+                    "tools": tools,
+                    "tool_choice": "auto"
                 },
                 timeout=30.0
             )
             response.raise_for_status()
             data = response.json()
+            response_message = data["choices"][0]["message"]
             
+            # Check if tool calls are present
+            tool_calls = response_message.get("tool_calls")
+            
+            if tool_calls:
+                # Append the assistant's message with tool calls to history
+                messages.append(response_message)
+                
+                # Execute tool calls
+                for tool_call in tool_calls:
+                    function_name = tool_call["function"]["name"]
+                    function_args = json.loads(tool_call["function"]["arguments"])
+                    
+                    if function_name in available_tools:
+                        function_response = available_tools[function_name](**function_args)
+                        
+                        # Append tool response to messages
+                        messages.append({
+                            "tool_call_id": tool_call["id"],
+                            "role": "tool",
+                            "name": function_name,
+                            "content": function_response,
+                        })
+                
+                # Second Call to OpenAI with tool results
+                response = await client.post(
+                    "https://api.openai.com/v1/chat/completions",
+                    headers={
+                        "Authorization": f"Bearer {OPENAI_API_KEY}",
+                        "Content-Type": "application/json"
+                    },
+                    json={
+                        "model": chat_request.model,
+                        "messages": messages,
+                        "max_tokens": chat_request.max_tokens,
+                        "temperature": chat_request.temperature
+                    },
+                    timeout=30.0
+                )
+                response.raise_for_status()
+                data = response.json()
+
             return ChatResponse(
                 response=data["choices"][0]["message"]["content"],
                 model=chat_request.model,
