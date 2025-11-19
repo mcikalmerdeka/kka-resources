@@ -113,9 +113,19 @@ ${detailInstructions[level]}. Jelaskan:
                   </div>
                 </div>
 
-                <div className="flex-1 min-h-[300px] border border-gray-300 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-green-500 focus-within:border-transparent bg-gray-50">
+                <div className="flex-1 min-h-[300px] border border-gray-300 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-green-500 focus-within:border-transparent bg-gray-50 relative">
                   <label className="block text-sm font-medium text-gray-700 mb-1 px-4 pt-2">Kode Anda</label>
-                  <div className="h-full font-mono text-sm">
+                  <div className="h-full font-mono text-sm relative">
+                    {/* Hidden input for HTML5 form validation */}
+                    <input 
+                      type="text" 
+                      value={code} 
+                      onChange={() => {}} 
+                      required 
+                      className="absolute opacity-0 w-px h-px -z-10"
+                      onInvalid={(e) => (e.target as HTMLInputElement).setCustomValidity('Mohon masukkan kode yang ingin dijelaskan')}
+                      onInput={(e) => (e.target as HTMLInputElement).setCustomValidity('')}
+                    />
                     <Editor
                       value={code}
                       onValueChange={code => setCode(code)}
@@ -123,12 +133,19 @@ ${detailInstructions[level]}. Jelaskan:
                       padding={16}
                       placeholder="Tempel kode Anda di sini..."
                       className="min-h-[300px]"
+                      textareaClassName="focus:outline-none"
                       style={{
                         fontFamily: '"Fira code", "Fira Mono", monospace',
                         fontSize: 14,
                         backgroundColor: '#f9fafb',
+                        minHeight: '300px',
                       }}
                     />
+                    <style jsx global>{`
+                      .npm__react-simple-code-editor__textarea:focus {
+                        outline: none !important;
+                      }
+                    `}</style>
                   </div>
                 </div>
 
