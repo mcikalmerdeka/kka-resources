@@ -22,6 +22,7 @@ export interface ChatRequest {
   history?: ChatMessage[];
   model?: string;
   system_message?: string;
+  use_search?: boolean;
 }
 
 export const chatService = {

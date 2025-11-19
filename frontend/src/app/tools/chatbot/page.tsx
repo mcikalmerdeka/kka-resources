@@ -8,6 +8,7 @@ export default function ChatbotPage() {
         description="I am a friendly AI assistant. Ask me anything about science, history, or the world around us!"
         endpoint="elementary"
         initialMessage="Halo! Saya adalah asisten AI kamu. Apa yang ingin kamu pelajari hari ini?"
+        useSearch={true}
       />
     </div>
   );

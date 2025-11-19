@@ -11,9 +11,10 @@ interface ChatInterfaceProps {
   description: string;
   endpoint?: 'elementary' | 'middle' | 'highschool';
   initialMessage?: string;
+  useSearch?: boolean;
 }
 
-export function ChatInterface({ title, description, endpoint = 'elementary', initialMessage }: ChatInterfaceProps) {
+export function ChatInterface({ title, description, endpoint = 'elementary', initialMessage, useSearch = false }: ChatInterfaceProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -53,7 +54,8 @@ export function ChatInterface({ title, description, endpoint = 'elementary', ini
       
       const response = await chatService.sendMessage({
         prompt: userMessage,
-        history: history.length > 0 ? history : undefined
+        history: history.length > 0 ? history : undefined,
+        use_search: useSearch
       }, endpoint);
 
       setMessages([
