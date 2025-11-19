@@ -5,6 +5,16 @@ import { Code, Send, Loader2, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { chatService } from '@/lib/api';
 import MarkdownRenderer from '@/components/MarkdownRenderer';
+import Editor from 'react-simple-code-editor';
+import { highlight, languages } from 'prismjs';
+import 'prismjs/components/prism-clike';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-python';
+import 'prismjs/components/prism-java';
+import 'prismjs/components/prism-c';
+import 'prismjs/components/prism-cpp';
+import 'prismjs/themes/prism.css';
+import Prism from 'prismjs';
 
 export default function CodeExplainerPage() {
   const [code, setCode] = useState('');
@@ -103,15 +113,23 @@ ${detailInstructions[level]}. Jelaskan:
                   </div>
                 </div>
 
-                <div className="flex-1 min-h-[300px]">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Kode Anda</label>
-                  <textarea
-                    value={code}
-                    onChange={(e) => setCode(e.target.value)}
-                    placeholder="Tempel kode Anda di sini..."
-                    className="w-full h-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent font-mono text-sm bg-gray-50"
-                    required
-                  />
+                <div className="flex-1 min-h-[300px] border border-gray-300 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-green-500 focus-within:border-transparent bg-gray-50">
+                  <label className="block text-sm font-medium text-gray-700 mb-1 px-4 pt-2">Kode Anda</label>
+                  <div className="h-full font-mono text-sm">
+                    <Editor
+                      value={code}
+                      onValueChange={code => setCode(code)}
+                      highlight={code => highlight(code, languages.includes(language) ? Prism.languages[language.toLowerCase()] || Prism.languages.javascript : Prism.languages.javascript, language)}
+                      padding={16}
+                      placeholder="Tempel kode Anda di sini..."
+                      className="min-h-[300px]"
+                      style={{
+                        fontFamily: '"Fira code", "Fira Mono", monospace',
+                        fontSize: 14,
+                        backgroundColor: '#f9fafb',
+                      }}
+                    />
+                  </div>
                 </div>
 
                 <button
@@ -149,6 +167,12 @@ ${detailInstructions[level]}. Jelaskan:
                       lang: "JavaScript", 
                       level: "Simple",
                       code: "for (let i = 0; i < 5; i++) {\n    console.log(i);\n}" 
+                    },
+                    {
+                      label: "HTML Structure",
+                      lang: "HTML/CSS",
+                      level: "Simple",
+                      code: "<!DOCTYPE html>\n<html>\n<body>\n    <h1>Hello World</h1>\n    <p>This is a paragraph.</p>\n</body>\n</html>"
                     }
                   ].map((ex, i) => (
                     <button
