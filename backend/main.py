@@ -24,6 +24,16 @@ app.include_router(chat.router)
 app.add_middleware(RateLimitMiddleware, throttle_rate=10)
 app.add_middleware(APIKeyMiddleware)
 
+# CORS Middleware
+from fastapi.middleware.cors import CORSMiddleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # In production, replace with specific domains
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # Root endpoint
 @app.get("/", tags=["root"])
 async def root():
