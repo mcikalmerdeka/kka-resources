@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Calculator, Send, Loader2, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { chatService } from '@/lib/api';
+import MarkdownRenderer from '@/components/MarkdownRenderer';
 
 export default function MathTutorPage() {
   const [problem, setProblem] = useState('');
@@ -34,6 +35,7 @@ Gunakan contoh atau analogi jika membantu pemahaman.`;
     try {
       const response = await chatService.sendMessage({
         prompt: prompt,
+        model: "gpt-4o-mini"
       }, 'middle');
       
       setSolution(response.response);
@@ -48,7 +50,7 @@ Gunakan contoh atau analogi jika membantu pemahaman.`;
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
       <div className="max-w-4xl mx-auto">
-        <Link href="/" className="inline-flex items-center text-gray-600 hover:text-blue-600 mb-6 transition-colors">
+        <Link href="/" className="inline-flex items-center text-gray-600 hover:text-orange-600 mb-6 transition-colors">
           <ArrowLeft className="w-4 h-4 mr-2" />
           Kembali ke Dashboard
         </Link>
@@ -59,7 +61,7 @@ Gunakan contoh atau analogi jika membantu pemahaman.`;
               <Calculator className="w-8 h-8 text-orange-600" />
               Math Tutor
             </h1>
-            <p className="text-gray-600 mt-2">Dapatkan bantuan langkah demi langkah untuk soal matematika Anda.</p>
+            <p className="text-gray-600 mt-2">Bantuan matematika instan dengan penjelasan langkah demi langkah.</p>
           </div>
 
           <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -67,7 +69,7 @@ Gunakan contoh atau analogi jika membantu pemahaman.`;
             <div className="space-y-6">
               <form onSubmit={handleSolve} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Topik</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Topik Matematika</label>
                   <select
                     value={topic}
                     onChange={(e) => setTopic(e.target.value)}
@@ -155,8 +157,8 @@ Gunakan contoh atau analogi jika membantu pemahaman.`;
             <div className="bg-gray-50 rounded-xl p-6 border border-gray-200 min-h-[400px] overflow-y-auto">
               <h3 className="text-lg font-semibold text-gray-800 mb-4">Solusi:</h3>
               {solution ? (
-                <div className="prose prose-orange max-w-none text-gray-700 leading-relaxed whitespace-pre-wrap">
-                  {solution}
+                <div className="prose prose-orange max-w-none">
+                  <MarkdownRenderer content={solution} />
                 </div>
               ) : (
                 <div className="h-full flex flex-col items-center justify-center text-gray-400 text-center">

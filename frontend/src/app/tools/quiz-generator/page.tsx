@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { HelpCircle, Send, Loader2, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { chatService } from '@/lib/api';
+import MarkdownRenderer from '@/components/MarkdownRenderer';
 
 export default function QuizGeneratorPage() {
   const [topic, setTopic] = useState('');
@@ -181,8 +182,8 @@ Pastikan soal-soal edukatif dan sesuai untuk pelajar.`;
             <div className="lg:col-span-2 bg-gray-50 rounded-xl p-6 border border-gray-200 min-h-[500px] overflow-y-auto">
               <h3 className="text-lg font-semibold text-gray-800 mb-4">Kuis Anda:</h3>
               {quiz ? (
-                <div className="prose prose-red max-w-none text-gray-700 leading-relaxed whitespace-pre-wrap">
-                  {quiz}
+                <div className="prose prose-red max-w-none text-gray-700 leading-relaxed">
+                  <MarkdownRenderer content={quiz} />
                 </div>
               ) : (
                 <div className="h-full flex flex-col items-center justify-center text-gray-400 text-center">

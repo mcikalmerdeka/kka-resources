@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Send, Bot, User, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { chatService, type ChatMessage } from '@/lib/api';
+import MarkdownRenderer from './MarkdownRenderer';
 
 interface ChatInterfaceProps {
   title: string;
@@ -103,7 +104,11 @@ export function ChatInterface({ title, description, endpoint = 'elementary', ini
               msg.role === 'user' ? "bg-blue-600 text-white rounded-tr-none" : "bg-white border border-gray-200 text-gray-800 rounded-tl-none shadow-sm",
               msg.role === 'system' && "bg-red-50 text-red-600 border-red-200"
             )}>
-              {msg.content}
+              {msg.role === 'assistant' ? (
+                <MarkdownRenderer content={msg.content} />
+              ) : (
+                msg.content
+              )}
             </div>
           </div>
         ))}

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Languages, Send, Loader2, ArrowLeft, ArrowRightLeft } from 'lucide-react';
 import Link from 'next/link';
 import { chatService } from '@/lib/api';
+import MarkdownRenderer from '@/components/MarkdownRenderer';
 
 export default function TranslatorPage() {
   const [text, setText] = useState('');
@@ -174,8 +175,8 @@ ${culturalNote}`;
                   Hasil Terjemahan
                 </div>
                 {translation ? (
-                  <div className="prose prose-pink max-w-none text-gray-800 leading-relaxed whitespace-pre-wrap mt-4">
-                    {translation}
+                  <div className="prose prose-pink max-w-none text-gray-800 leading-relaxed mt-4">
+                    <MarkdownRenderer content={translation} />
                   </div>
                 ) : (
                   <div className="h-full flex flex-col items-center justify-center text-gray-400 text-center">

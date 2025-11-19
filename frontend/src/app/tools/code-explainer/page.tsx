@@ -4,11 +4,12 @@ import { useState } from 'react';
 import { Code, Send, Loader2, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { chatService } from '@/lib/api';
+import MarkdownRenderer from '@/components/MarkdownRenderer';
 
 export default function CodeExplainerPage() {
   const [code, setCode] = useState('');
   const [language, setLanguage] = useState('Python');
-  const [level, setLevel] = useState('Detailed');
+  const [level, setLevel] = useState('Simple');
   const [explanation, setExplanation] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -42,6 +43,7 @@ ${detailInstructions[level]}. Jelaskan:
     try {
       const response = await chatService.sendMessage({
         prompt: prompt,
+        model: "gpt-4o-mini"
       }, 'highschool');
       
       setExplanation(response.response);
@@ -56,7 +58,7 @@ ${detailInstructions[level]}. Jelaskan:
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
       <div className="max-w-6xl mx-auto">
-        <Link href="/" className="inline-flex items-center text-gray-600 hover:text-blue-600 mb-6 transition-colors">
+        <Link href="/" className="inline-flex items-center text-gray-600 hover:text-green-600 mb-6 transition-colors">
           <ArrowLeft className="w-4 h-4 mr-2" />
           Kembali ke Dashboard
         </Link>
@@ -67,13 +69,13 @@ ${detailInstructions[level]}. Jelaskan:
               <Code className="w-8 h-8 text-green-600" />
               Code Explainer
             </h1>
-            <p className="text-gray-600 mt-2">Pahami kode pemrograman dengan penjelasan AI yang mudah dimengerti.</p>
+            <p className="text-gray-600 mt-2">Pahami kode program dengan penjelasan AI yang mudah dimengerti.</p>
           </div>
 
           <div className="p-6 grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Input Form */}
-            <div className="space-y-6 flex flex-col h-full">
-              <form onSubmit={handleExplain} className="space-y-4 flex flex-col flex-1">
+            {/* Input Section */}
+            <div className="space-y-6">
+              <form onSubmit={handleExplain} className="space-y-4 h-full flex flex-col">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Bahasa</label>
@@ -132,7 +134,7 @@ ${detailInstructions[level]}. Jelaskan:
               </form>
 
               {/* Examples Section */}
-              <div className="mt-6 pt-6 border-t border-gray-100">
+              <div className="pt-6 border-t border-gray-100">
                 <h3 className="text-sm font-semibold text-gray-500 mb-3 uppercase tracking-wider">Contoh Kode</h3>
                 <div className="grid grid-cols-1 gap-3">
                   {[
@@ -172,11 +174,8 @@ ${detailInstructions[level]}. Jelaskan:
             <div className="bg-gray-50 rounded-xl p-6 border border-gray-200 min-h-[500px] overflow-y-auto">
               <h3 className="text-lg font-semibold text-gray-800 mb-4">Penjelasan:</h3>
               {explanation ? (
-                <div className="prose prose-green max-w-none text-gray-700 leading-relaxed">
-                  {/* Basic markdown rendering - in a real app use react-markdown */}
-                  {explanation.split('\n').map((line, i) => (
-                    <p key={i} className="mb-2">{line}</p>
-                  ))}
+                <div className="prose prose-green max-w-none">
+                  <MarkdownRenderer content={explanation} />
                 </div>
               ) : (
                 <div className="h-full flex flex-col items-center justify-center text-gray-400 text-center">

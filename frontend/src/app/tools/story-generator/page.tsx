@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from 'react';
-import { BookOpen, Send, Loader2, ArrowLeft } from 'lucide-react';
+import { BookOpen, Send, Loader2, ArrowLeft, Bot } from 'lucide-react';
 import Link from 'next/link';
 import { chatService } from '@/lib/api';
-import { cn } from '@/lib/utils';
+import MarkdownRenderer from '@/components/MarkdownRenderer';
 
 export default function StoryGeneratorPage() {
   const [character, setCharacter] = useState('');
@@ -32,7 +32,7 @@ export default function StoryGeneratorPage() {
     try {
       const response = await chatService.sendMessage({
         prompt: prompt,
-        model: "gpt-4.1-mini" // Optional, backend defaults usually work
+        model: "gpt-4o-mini"
       }, 'elementary');
       
       setStory(response.response);
@@ -153,10 +153,13 @@ export default function StoryGeneratorPage() {
 
             {/* Output Area */}
             <div className="bg-gray-50 rounded-xl p-6 border border-gray-200 min-h-[400px]">
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">Cerita Anda:</h3>
+              <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                <Bot className="w-5 h-5 text-purple-600" />
+                Cerita Anda
+              </h3>
               {story ? (
-                <div className="prose prose-purple max-w-none whitespace-pre-wrap text-gray-700 leading-relaxed">
-                  {story}
+                <div className="prose prose-purple max-w-none">
+                  <MarkdownRenderer content={story} />
                 </div>
               ) : (
                 <div className="h-full flex flex-col items-center justify-center text-gray-400 text-center">
