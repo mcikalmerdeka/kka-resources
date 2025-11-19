@@ -1,4 +1,5 @@
 import { Bot, BookOpen, Code, Calculator, Languages, BrainCircuit, HelpCircle } from 'lucide-react';
+import { GithubIcon, LinkedinIcon, InstagramIcon } from '@/components/Icons';
 import { ToolCard } from '@/components/ToolCard';
 
 export default function Home() {
@@ -71,7 +72,9 @@ export default function Home() {
               <span className="text-blue-600">AI Education</span> Tools
             </h1>
             <p className="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-              Explore the world of Artificial Intelligence with our interactive learning tools. Designed for Indonesian curriculum (Phase C-F).
+              Explore the world of Artificial Intelligence with our interactive learning tools.
+              <br />
+              Designed for Indonesian curriculum (Phase C-F).
             </p>
           </div>
         </div>
@@ -88,8 +91,22 @@ export default function Home() {
       
       {/* Footer */}
       <footer className="bg-white border-t mt-12">
-        <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center text-gray-400 text-sm">
-          <p>&copy; 2025 Koding dan Kecerdasan Artificial. Open Source Education.</p>
+        <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center">
+          <div className="flex justify-center space-x-6 mb-4">
+            <a href="https://www.linkedin.com/in/mcikalmerdeka" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-600 transition-colors">
+              <LinkedinIcon className="w-6 h-6" />
+              <span className="sr-only">LinkedIn</span>
+            </a>
+            <a href="https://github.com/mcikalmerdeka" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-900 transition-colors">
+              <GithubIcon className="w-6 h-6" />
+              <span className="sr-only">GitHub</span>
+            </a>
+            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-pink-600 transition-colors">
+              <InstagramIcon className="w-6 h-6" />
+              <span className="sr-only">Instagram</span>
+            </a>
+          </div>
+          <p className="text-gray-400 text-sm">&copy; 2025 Koding dan Kecerdasan Artificial. Open Source Education.</p>
         </div>
       </footer>
     </div>
