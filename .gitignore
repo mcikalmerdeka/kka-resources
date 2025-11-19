@@ -29,6 +29,9 @@ venv/
 ENV/
 env/
 .venv
+.env*.local
+.env.local
+!.env.local
 
 # Jupyter Notebook
 .ipynb_checkpoints
@@ -76,3 +79,6 @@ test.py
 
 # Gradio files
 .gradio/
+
+# Exceptions
+!frontend/src/lib/
