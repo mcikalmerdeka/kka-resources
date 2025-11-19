@@ -77,7 +77,7 @@ export default function Home() {
       color: "bg-indigo-500"
     },
     {
-      title: "Environmental Concern",
+      title: "AI Environmental Concern",
       description: "Understand the environmental impact of training and using AI models.",
       href: "/theory/environmental-concern",
       icon: <Leaf className="w-6 h-6" />,
