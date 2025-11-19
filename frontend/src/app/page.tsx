@@ -1,6 +1,12 @@
+"use client";
+
+import { useState } from 'react';
 import { Bot, BookOpen, Code, Calculator, Languages, BrainCircuit, HelpCircle } from 'lucide-react';
 import { GithubIcon, LinkedinIcon, InstagramIcon } from '@/components/Icons';
 import { ToolCard } from '@/components/ToolCard';
+import { TheoryCard } from '@/components/TheoryCard';
+import { Brain, Leaf } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 export default function Home() {
   const tools = [
@@ -62,6 +68,25 @@ export default function Home() {
     }
   ];
 
+  const theories = [
+    {
+      title: "How AI is Trained",
+      description: "Learn the basics of how Artificial Intelligence learns from data.",
+      href: "/theory/how-ai-is-trained",
+      icon: <Brain className="w-6 h-6" />,
+      color: "bg-indigo-500"
+    },
+    {
+      title: "Environmental Concern",
+      description: "Understand the environmental impact of training and using AI models.",
+      href: "/theory/environmental-concern",
+      icon: <Leaf className="w-6 h-6" />,
+      color: "bg-emerald-500"
+    }
+  ];
+
+  const [activeTab, setActiveTab] = useState<'implementations' | 'theory'>('implementations');
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
@@ -80,17 +105,55 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Grid Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {tools.map((tool) => (
-            <ToolCard key={tool.href} {...tool} />
-          ))}
+      {/* Tab Navigation */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex justify-center">
+          <div className="bg-white p-1 rounded-full border border-gray-200 shadow-sm inline-flex">
+            <button
+              onClick={() => setActiveTab('implementations')}
+              className={cn(
+                "px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-200",
+                activeTab === 'implementations'
+                  ? "bg-blue-600 text-white shadow-sm"
+                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+              )}
+            >
+              AI Implementations
+            </button>
+            <button
+              onClick={() => setActiveTab('theory')}
+              className={cn(
+                "px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-200",
+                activeTab === 'theory'
+                  ? "bg-indigo-600 text-white shadow-sm"
+                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+              )}
+            >
+              AI Basic Theory
+            </button>
+          </div>
         </div>
+      </div>
+
+      {/* Content Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        {activeTab === 'implementations' ? (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            {tools.map((tool) => (
+              <ToolCard key={tool.href} {...tool} />
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            {theories.map((theory) => (
+              <TheoryCard key={theory.href} {...theory} />
+            ))}
+          </div>
+        )}
       </div>
       
       {/* Footer */}
-      <footer className="bg-white border-t mt-12">
+      <footer className="bg-white border-t mt-auto">
         <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center">
           <div className="flex justify-center space-x-6 mb-4">
             <a href="https://www.linkedin.com/in/mcikalmerdeka" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-600 transition-colors">
@@ -101,7 +164,7 @@ export default function Home() {
               <GithubIcon className="w-6 h-6" />
               <span className="sr-only">GitHub</span>
             </a>
-            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-pink-600 transition-colors">
+            <a href="https://www.instagram.com/cikalmerdeka/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-pink-600 transition-colors">
               <InstagramIcon className="w-6 h-6" />
               <span className="sr-only">Instagram</span>
             </a>
