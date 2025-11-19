@@ -11,33 +11,40 @@
 
 ## 🎯 Project Mission
 
-This project provides **ready-to-use AI applications** for the new Indonesian "Koding dan Kecerdasan Artificial" curriculum. All applications run in **Google Colab** (free!), connect to a **centralized backend** (no API keys needed), and are designed to help teachers and students explore AI safely and effectively.
+This project provides **ready-to-use AI applications** for the new Indonesian "Koding dan Kecerdasan Artificial" curriculum.
+
+**Two ways to use:**
+
+1. **Web App**: A modern, responsive website for instant access.
+2. **Google Colab**: Educational notebooks to see the code behind the magic.
+
+All applications connect to a **centralized backend** (no API keys needed) and are designed to help teachers and students explore AI safely and effectively.
 
 ### 🌟 Why This Project?
 
-- **Zero Setup**: Just click and run in Google Colab
-- **Cost-Free**: We manage the API costs
-- **Educational**: Designed specifically for Indonesian curriculum phases C-F
-- **Safe**: Rate-limited, curated prompts, no data collection
+- **Instant Access**: Use the web app on any device (laptop, tablet, phone).
+- **Zero Setup**: No installation required.
+- **Cost-Free**: We manage the API costs.
+- **Educational**: Designed specifically for Indonesian curriculum phases C-F.
+- **Safe**: Rate-limited, curated prompts, no data collection.
 - **Open Source**: Modify, learn from, and contribute!
 
 ---
 
 ## 🚀 Quick Start
 
-1. **Choose an application** from the table below
-2. **Click "Open in Colab"** badge
-3. **Run all cells** (Runtime → Run all)
-4. **Start exploring!** The interface will appear in ~30 seconds
+### Option 1: Web Application (Recommended)
 
-**That's it!** No installation, no API keys, no configuration needed.
+Access all tools instantly via our modern web interface. No setup required!
 
----
+👉 **[Launch Web App](https://kka-frontend.vercel.app/)**
 
-## 📱 Available Applications
+### Option 2: Google Colab (For Education/Development)
 
-| Application                          | Description                                        | Difficulty   | Phase | Open in Colab                                                                                                                                                  |
-| ------------------------------------ | -------------------------------------------------- | ------------ | ----- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+You can still run each tool individually in Google Colab to see how the code works.
+
+| Application                    | Description                                        | Difficulty   | Phase | Open in Colab                                                                                                                                                       |
+| ------------------------------ | -------------------------------------------------- | ------------ | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 01. 🤖**Simple Chatbot**       | Basic Q&A chatbot to learn about AI conversations  | Beginner     | C     | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1U0GQ8Vcc7No2yjdh251V-FayQ1BvqIuE?usp=sharing) |
 | 02. 📖**Story Generator**      | Create creative stories with AI                    | Beginner     | C     | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1gA4nuj1dmEvljH55Y7_4RtVQb5EiWn39?usp=sharing) |
 | 03. 💻**Code Explainer**       | Understand programming code with AI explanations   | Intermediate | D-F   | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1-hEmzR9qZupCC1sL0WWPcUgI6AU_6u1d?usp=sharing) |
@@ -121,12 +128,12 @@ New to using these tools? Check out our comprehensive guides:
 
 These applications are designed to support the official Indonesian AI curriculum:
 
-| **Phase** | **Level**     | **Applications**                                           | **Learning Focus**                            |
-| --------------- | ------------------- | ---------------------------------------------------------------- | --------------------------------------------------- |
-| C               | Kelas 5-6 SD        | Simple Chatbot, Story Generator, Math Tutor, Language Translator | Basic AI interaction, creativity, problem-solving   |
-| D               | Kelas 7-9 SMP       | Math Tutor, Language Translator, Code Explainer, Quiz Generator  | AI as learning tool, critical thinking, programming |
-| E               | Kelas 10 SMA/SMK    | Code Explainer, Math Tutor, Quiz Generator                       | Advanced AI understanding, technical depth          |
-| F               | Kelas 11-12 SMA/SMK | Code Explainer, Quiz Generator                                   | Professional application, collaboration             |
+| **Phase** | **Level**           | **Applications**                                                 | **Learning Focus**                                  |
+| --------- | ------------------- | ---------------------------------------------------------------- | --------------------------------------------------- |
+| C         | Kelas 5-6 SD        | Simple Chatbot, Story Generator, Math Tutor, Language Translator | Basic AI interaction, creativity, problem-solving   |
+| D         | Kelas 7-9 SMP       | Math Tutor, Language Translator, Code Explainer, Quiz Generator  | AI as learning tool, critical thinking, programming |
+| E         | Kelas 10 SMA/SMK    | Code Explainer, Math Tutor, Quiz Generator                       | Advanced AI understanding, technical depth          |
+| F         | Kelas 11-12 SMA/SMK | Code Explainer, Quiz Generator                                   | Professional application, collaboration             |
 
 ### Teaching Tips
 
@@ -291,7 +298,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
 ### Tech Stack
 
-- **Frontend**: Google Colab + Gradio
+- **Frontend**: Next.js 14 (Web App) / Google Colab + Gradio (Notebooks)
 - **Backend**: FastAPI + Google Cloud Run
 - **AI Model**: OpenAI GPT-4o-mini
 - **Language**: Python 3.11+
@@ -304,7 +311,7 @@ GET  /                    # Status and available endpoints
 GET  /health             # Health check
 POST /chat               # General chat (configurable)
 POST /chat/elementary    # Elementary-optimized responses
-POST /chat/middle        # Middle school-optimized responses  
+POST /chat/middle        # Middle school-optimized responses
 POST /chat/highschool    # High school-optimized responses
 ```
 
@@ -416,7 +423,6 @@ https://github.com/yourusername/your-repo
 - [ ] Video tutorials for each application
 - [ ] More applications (image generation, data analysis)
 - [ ] Offline mode for areas with limited internet
-- [ ] Mobile app version
 - [ ] Multi-language support (regional languages)
 - [ ] Student progress tracking (optional, privacy-preserving)
 
