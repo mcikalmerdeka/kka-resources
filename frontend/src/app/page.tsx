@@ -5,7 +5,7 @@ import { Bot, BookOpen, Code, Calculator, Languages, BrainCircuit, HelpCircle } 
 import { GithubIcon, LinkedinIcon, InstagramIcon } from '@/components/Icons';
 import { ToolCard } from '@/components/ToolCard';
 import { TheoryCard } from '@/components/TheoryCard';
-import { Brain, Leaf } from 'lucide-react';
+import { Brain, Leaf, Scale } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export default function Home() {
@@ -82,6 +82,13 @@ export default function Home() {
       href: "/theory/environmental-concern",
       icon: <Leaf className="w-6 h-6" />,
       color: "bg-emerald-500"
+    },
+    {
+      title: "AI Bias & Fairness",
+      description: "Why AI can be unfair and how to fix it.",
+      href: "/theory/ai-bias",
+      icon: <Scale className="w-6 h-6" />,
+      color: "bg-rose-500"
     }
   ];
 
