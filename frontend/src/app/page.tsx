@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { Bot, BookOpen, Code, Calculator, Languages, BrainCircuit, HelpCircle } from 'lucide-react';
+import { Bot, BookOpen, Code, Calculator, Languages, BrainCircuit, HelpCircle, BarChart2 } from 'lucide-react';
 import { GithubIcon, LinkedinIcon, InstagramIcon } from '@/components/Icons';
 import { ToolCard } from '@/components/ToolCard';
 import { TheoryCard } from '@/components/TheoryCard';
@@ -65,6 +65,14 @@ export default function Home() {
       icon: <BrainCircuit className="w-6 h-6" />,
       phase: "C",
       color: "bg-teal-500"
+    },
+    {
+      title: "Simple Data Analysis",
+      description: "Analyze data and generate insights with AI. Supports text and file inputs.",
+      href: "/tools/data-analysis",
+      icon: <BarChart2 className="w-6 h-6" />,
+      phase: "E-F",
+      color: "bg-cyan-500"
     }
   ];
 
