@@ -130,8 +130,6 @@ For the JSON data, ensure the "name" field is used for the X-axis category.
       const response = await chatService.sendMessage({
         prompt: userPrompt,
         system_message: systemPrompt,
-        model: 'gpt-4o-mini', // Use a capable model for JSON generation
-        temperature: 0.2, // Low temperature for consistent JSON
       }, 'highschool');
 
       // Parse Response
@@ -191,7 +189,7 @@ For the JSON data, ensure the "name" field is used for the X-axis category.
               label={({ name, percent }) => `${name}: ${(percent ? percent * 100 : 0).toFixed(0)}%`}
               outerRadius={150}
               fill="#8884d8"
-              dataKey={result.dataKeys[0] || 'value'}
+              dataKey={result.dataKeys?.[0] || 'value'}
             >
               {result.graphData.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
