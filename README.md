@@ -37,14 +37,14 @@ All applications connect to a **centralized backend** (no API keys needed) and a
 
 Access all tools instantly via our modern web interface. No setup required!
 
-👉 **[Launch Web App](https://kka-frontend.vercel.app/)**
+👉 **[Launch Web App](https://kka-lab.xyz/)**
 
 ### Option 2: Google Colab (For Education/Development)
 
 You can still run each tool individually in Google Colab to see how the code works.
 
-| Application                    | Description                                        | Difficulty   | Phase | Open in Colab                                                                                                                                                       |
-| ------------------------------ | -------------------------------------------------- | ------------ | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Application                          | Description                                        | Difficulty   | Phase | Open in Colab                                                                                                                                                  |
+| ------------------------------------ | -------------------------------------------------- | ------------ | ----- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 01. 🤖**Simple Chatbot**       | Basic Q&A chatbot to learn about AI conversations  | Beginner     | C     | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1U0GQ8Vcc7No2yjdh251V-FayQ1BvqIuE?usp=sharing) |
 | 02. 📖**Story Generator**      | Create creative stories with AI                    | Beginner     | C     | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1gA4nuj1dmEvljH55Y7_4RtVQb5EiWn39?usp=sharing) |
 | 03. 💻**Code Explainer**       | Understand programming code with AI explanations   | Intermediate | D-F   | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1-hEmzR9qZupCC1sL0WWPcUgI6AU_6u1d?usp=sharing) |
@@ -60,14 +60,11 @@ You can still run each tool individually in Google Colab to see how the code wor
 ```
 Koding-dan-Kecerdasan-Artificial/
 │
-├── 📱 app/                          # Ready-to-use educational applications
-│   ├── 01_simple_chatbot.ipynb      # Basic AI chatbot
-│   ├── 02_story_generator.ipynb     # Creative story generation
-│   ├── 03_code_explainer.ipynb      # Programming code explanations
-│   ├── 04_math_tutor.ipynb          # Math problem solving
-│   ├── 05_language_translator.ipynb # Language translation
-│   ├── 06_quiz_generator.ipynb      # Educational quiz creation
-│   └── 07_animal_guessing_game.ipynb # Animal guessing game
+├── 💻 frontend/                     # Next.js Web Application
+│   ├── src/                         # Source code
+│   ├── public/                      # Static assets
+│   ├── package.json                 # Frontend dependencies
+│   └── README.md                    # Frontend documentation
 │
 ├── 🔧 backend/                      # FastAPI backend service
 │   ├── main.py                      # API endpoints & app configuration
@@ -81,6 +78,15 @@ Koding-dan-Kecerdasan-Artificial/
 │   ├── Dockerfile                   # Container configuration
 │   ├── deploy.ps1                   # Deployment script
 │   └── README.md                    # Backend documentation
+│
+├── 📱 notebooks/                    # Ready-to-use educational applications
+│   ├── 01_simple_chatbot.ipynb      # Basic AI chatbot
+│   ├── 02_story_generator.ipynb     # Creative story generation
+│   ├── 03_code_explainer.ipynb      # Programming code explanations
+│   ├── 04_math_tutor.ipynb          # Math problem solving
+│   ├── 05_language_translator.ipynb # Language translation
+│   ├── 06_quiz_generator.ipynb      # Educational quiz creation
+│   └── 07_animal_guessing_game.ipynb # Animal guessing game
 │
 ├── 📚 docs/                         # Documentation
 │   ├── teacher_guide.md             # Teacher usage guide
@@ -105,8 +111,9 @@ Koding-dan-Kecerdasan-Artificial/
 
 ### Key Folders
 
-- **`/app`**: Production-ready notebooks for students and teachers. Start here!
+- **`/frontend`**: The Next.js web application source code.
 - **`/backend`**: Centralized FastAPI service with API key authentication, rate limiting, and educational optimizations. See [backend/README.md](backend/README.md) for deployment and API documentation.
+- **`/notebooks`**: Production-ready notebooks for students and teachers. Start here!
 - **`/docs`**: Comprehensive guides for teachers and troubleshooting
 - **`/experiments`**: Development and testing work (not for production use)
 - **`/others`**: Official Indonesian curriculum PDFs and technical references
@@ -128,12 +135,12 @@ New to using these tools? Check out our comprehensive guides:
 
 These applications are designed to support the official Indonesian AI curriculum:
 
-| **Phase** | **Level**           | **Applications**                                                 | **Learning Focus**                                  |
-| --------- | ------------------- | ---------------------------------------------------------------- | --------------------------------------------------- |
-| C         | Kelas 5-6 SD        | Simple Chatbot, Story Generator, Math Tutor, Language Translator | Basic AI interaction, creativity, problem-solving   |
-| D         | Kelas 7-9 SMP       | Math Tutor, Language Translator, Code Explainer, Quiz Generator  | AI as learning tool, critical thinking, programming |
-| E         | Kelas 10 SMA/SMK    | Code Explainer, Math Tutor, Quiz Generator                       | Advanced AI understanding, technical depth          |
-| F         | Kelas 11-12 SMA/SMK | Code Explainer, Quiz Generator                                   | Professional application, collaboration             |
+| **Phase** | **Level**     | **Applications**                                           | **Learning Focus**                            |
+| --------------- | ------------------- | ---------------------------------------------------------------- | --------------------------------------------------- |
+| C               | Kelas 5-6 SD        | Simple Chatbot, Story Generator, Math Tutor, Language Translator | Basic AI interaction, creativity, problem-solving   |
+| D               | Kelas 7-9 SMP       | Math Tutor, Language Translator, Code Explainer, Quiz Generator  | AI as learning tool, critical thinking, programming |
+| E               | Kelas 10 SMA/SMK    | Code Explainer, Math Tutor, Quiz Generator                       | Advanced AI understanding, technical depth          |
+| F               | Kelas 11-12 SMA/SMK | Code Explainer, Quiz Generator                                   | Professional application, collaboration             |
 
 ### Teaching Tips
 
@@ -278,7 +285,7 @@ git clone https://github.com/yourusername/your-repo.git
 cd your-repo
 
 # Test notebooks locally
-jupyter notebook app/
+jupyter notebook notebooks/
 
 # Run backend locally (optional)
 cd backend
