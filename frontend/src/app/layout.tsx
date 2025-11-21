@@ -18,7 +18,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "KKA - AI Education Tools",
+  title: "KKA Lab - AI Education Tools",
   description: "Platform pembelajaran AI interaktif untuk siswa Indonesia (Fase C-F)",
 };
 

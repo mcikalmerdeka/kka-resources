@@ -159,7 +159,7 @@ export default function Home() {
                 <button
                   onClick={() => setActiveTab('implementations')}
                   className={cn(
-                    "inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all",
+                    "inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all cursor-pointer",
                     activeTab === 'implementations'
                       ? "bg-slate-900 text-white shadow-xl hover:bg-slate-800"
                       : "bg-white/80 backdrop-blur-md border border-white text-slate-700 hover:bg-white shadow-sm"
@@ -171,7 +171,7 @@ export default function Home() {
                 <button
                   onClick={() => setActiveTab('theory')}
                   className={cn(
-                    "inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all",
+                    "inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all cursor-pointer",
                     activeTab === 'theory'
                       ? "bg-slate-900 text-white shadow-xl hover:bg-slate-800"
                       : "bg-white/80 backdrop-blur-md border border-white text-slate-700 hover:bg-white shadow-sm"
