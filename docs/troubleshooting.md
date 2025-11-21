@@ -19,11 +19,13 @@ Common issues and solutions for the AI Education Applications.
 **Symptoms**: Request takes too long and fails
 
 **Causes**:
+
 - Backend server may be starting up (cold start)
 - Internet connection issues
 - Server overload
 
 **Solutions**:
+
 1. Wait 30 seconds and try again
 2. Check your internet connection
 3. Try during off-peak hours
@@ -34,11 +36,13 @@ Common issues and solutions for the AI Education Applications.
 **Symptoms**: Immediate connection failure
 
 **Causes**:
+
 - Wrong backend URL
 - Backend server is down
 - Network firewall blocking connection
 
 **Solutions**:
+
 1. Verify the `BACKEND_URL` is correct
 2. Check if you can access the URL in a browser
 3. Try from a different network
@@ -53,11 +57,13 @@ Common issues and solutions for the AI Education Applications.
 **Symptoms**: Code runs but no interface shows up
 
 **Causes**:
+
 - Gradio installation failed
 - Browser pop-up blocker
 - Colab rendering issue
 
 **Solutions**:
+
 1. Check installation output for errors
 2. Re-run the pip install cell
 3. Restart runtime: Runtime → Restart runtime
@@ -69,6 +75,7 @@ Common issues and solutions for the AI Education Applications.
 **Symptoms**: Error when importing gradio
 
 **Solutions**:
+
 ```python
 # Run this cell first
 %pip install -q requests gradio
@@ -86,6 +93,7 @@ Common issues and solutions for the AI Education Applications.
 **Explanation**: Backend has rate limiting (10 requests/minute per IP) to prevent abuse and manage costs
 
 **Solutions**:
+
 1. Wait 1 minute before trying again
 2. Don't spam requests rapidly
 3. If teaching a class, consider:
@@ -94,6 +102,7 @@ Common issues and solutions for the AI Education Applications.
    - Requesting increased limits (see below)
 
 **For Teachers**: If you need higher limits for classroom use, contact the project maintainer with:
+
 - Your school/institution
 - Number of students
 - Intended use case
@@ -105,6 +114,7 @@ Common issues and solutions for the AI Education Applications.
 **Explanation**: Backend server is missing API configuration
 
 **Solutions**:
+
 1. If you're a student/teacher using the shared backend, report this to your instructor
 2. If you're self-hosting, ensure `OPENAI_API_KEY` environment variable is set
 3. Check backend health: Visit `{BACKEND_URL}/health` in browser
@@ -114,11 +124,13 @@ Common issues and solutions for the AI Education Applications.
 **Symptoms**: Response is empty, malformed, or contains unexpected text
 
 **Causes**:
+
 - Backend API change
 - Model returned unexpected format
 - Prompt engineering issue
 
 **Solutions**:
+
 1. Try a simpler prompt
 2. Check if the issue persists with different inputs
 3. Clear outputs and restart: Runtime → Restart and run all
@@ -133,17 +145,20 @@ Common issues and solutions for the AI Education Applications.
 **Symptoms**: Takes longer than 10 seconds to get a response
 
 **Causes**:
+
 - Model processing time (normal for long inputs)
 - Server cold start
 - High server load
 
 **Solutions**:
+
 1. **For first request**: Wait up to 30 seconds (cold start)
 2. **For subsequent requests**: Should be faster
 3. **Reduce input size**: Shorter prompts = faster responses
 4. **Off-peak usage**: Try during less busy times
 
 **Normal Response Times**:
+
 - Simple Chatbot: 2-5 seconds
 - Story Generator: 5-10 seconds
 - Code Explainer: 3-8 seconds
@@ -156,11 +171,13 @@ Common issues and solutions for the AI Education Applications.
 **Symptoms**: "Runtime disconnected" message
 
 **Causes**:
+
 - Colab timeout (90 minutes of inactivity)
 - Poor internet connection
 - Browser tab suspended
 
 **Solutions**:
+
 1. Click "Reconnect"
 2. Run cells again from top
 3. Keep browser tab active
@@ -175,6 +192,7 @@ Common issues and solutions for the AI Education Applications.
 **Symptoms**: Colab runs out of memory or resources
 
 **Solutions**:
+
 1. Our applications use minimal resources, this shouldn't happen
 2. If it does: Runtime → Restart runtime
 3. Close other browser tabs
@@ -185,11 +203,13 @@ Common issues and solutions for the AI Education Applications.
 **Symptoms**: Changes not saving or "Failed to save" error
 
 **Causes**:
+
 - Not signed into Google
 - Network issues
 - Colab service issues
 
 **Solutions**:
+
 1. Sign in to Google Account
 2. File → Save a copy in Drive
 3. Download notebook: File → Download → Download .ipynb
@@ -202,6 +222,7 @@ Common issues and solutions for the AI Education Applications.
 **Explanation**: This is normal for notebooks from GitHub
 
 **Solutions**:
+
 1. Review the code (it's safe!)
 2. Click "Run anyway"
 3. Only open notebooks from trusted sources
@@ -232,7 +253,8 @@ Common issues and solutions for the AI Education Applications.
 
 **Issue**: Wrong answer provided
 
-**Solution**: 
+**Solution**:
+
 1. AI can make mistakes in complex calculations
 2. Always verify with another method
 3. Report persistent errors with specific problem
@@ -242,7 +264,8 @@ Common issues and solutions for the AI Education Applications.
 
 **Issue**: Translation sounds unnatural
 
-**Solution**: 
+**Solution**:
+
 1. This is common with AI translation
 2. Try enabling "cultural notes" for context
 3. Understand that translation is an art, not a science
@@ -252,6 +275,7 @@ Common issues and solutions for the AI Education Applications.
 **Issue**: Questions are not relevant or too easy/hard
 
 **Solution**:
+
 1. Be more specific in topic description
 2. Adjust difficulty setting
 3. Review and edit generated questions before use
@@ -266,6 +290,7 @@ Common issues and solutions for the AI Education Applications.
 **Setting up your own backend**:
 
 1. **Cloud Run Deployment**:
+
 ```bash
 cd backend
 gcloud run deploy educational-llm-proxy \
@@ -277,6 +302,7 @@ gcloud run deploy educational-llm-proxy \
 ```
 
 2. **Local Testing**:
+
 ```bash
 cd backend
 pip install -r requirements.txt
@@ -287,6 +313,7 @@ uvicorn main:app --reload
 ### Rate Limiting Configuration
 
 Edit `backend/main.py`:
+
 ```python
 # Change from 10/minute to desired rate
 @limiter.limit("10/minute")
@@ -295,10 +322,11 @@ Edit `backend/main.py`:
 ### Model Configuration
 
 To change models or parameters:
+
 ```python
 # In backend/main.py
 class ChatRequest(BaseModel):
-    model: str = "gpt-4o-mini"  # Change default model
+    model: str = "gpt-4.1-mini"  # Change default model
     max_tokens: int = 250  # Change token limit
     temperature: float = 0.7  # Change creativity
 ```
@@ -317,6 +345,7 @@ class ChatRequest(BaseModel):
 ### How to Report Issues
 
 Include:
+
 1. **Which application** you were using
 2. **Exact error message** (screenshot helpful)
 3. **What you were trying to do**
@@ -362,4 +391,3 @@ If you've tried everything in this guide and still have problems:
 ---
 
 **Remember**: Technology isn't perfect, and that's okay! Teaching moments can come from troubleshooting together. Model problem-solving and critical thinking when issues arise.
-

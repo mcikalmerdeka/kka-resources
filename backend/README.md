@@ -3,6 +3,7 @@
 FastAPI backend for AI Education Applications - manages OpenAI API calls, rate limiting, and educational prompt optimization.
 
 ## Table of Contents
+
 - [Overview](#overview)
 - [Architecture](#architecture)
 - [API Endpoints](#api-endpoints)
@@ -29,7 +30,7 @@ This backend acts as a proxy between student notebooks and OpenAI's API, providi
 
 - **API Key Authentication**: Secure access control via X-API-Key header
 - **Rate Limiting**: 10 requests/minute per IP to prevent abuse
-- **Cost Management**: Uses efficient gpt-4o-mini model
+- **Cost Management**: Uses efficient gpt-4.1-mini model
 - **Educational Optimization**: Age-appropriate system prompts
 - **Centralized Control**: No OpenAI API keys needed by students
 - **Conversation Memory**: Support for maintaining chat history
@@ -45,12 +46,14 @@ Colab Notebooks → FastAPI Backend → OpenAI API
 ## API Endpoints
 
 ### Health Check
+
 ```
 GET /        # No auth required
 GET /health  # No auth required
 ```
 
 ### Chat Endpoints
+
 ```
 POST /chat                # Full control over parameters
 POST /chat/elementary     # Optimized for Phase A-B (Elementary)
@@ -65,6 +68,7 @@ POST /chat/highschool     # Optimized for Phase E-F (High School)
 ### Local Development
 
 #### Prerequisites
+
 - Python 3.8+
 - OpenAI API key
 - Backend API key
@@ -101,6 +105,7 @@ curl -X POST "http://localhost:8000/chat/elementary" \
 ### Deployment to Cloud Run
 
 #### Prerequisites
+
 - Google Cloud account
 - gcloud CLI installed
 - OpenAI API key
@@ -164,6 +169,7 @@ API_KEY=your-secret-key-here    # Required: Backend API key for authentication
 ### How It Works
 
 The backend uses `APIKeyMiddleware` to validate the `X-API-Key` header:
+
 - ✅ Validates against `API_KEY` environment variable
 - ✅ Excludes `/`, `/health`, `/docs`, `/redoc`, `/openapi.json` from authentication
 - ✅ Returns 401 if API key missing, 403 if invalid
@@ -171,11 +177,13 @@ The backend uses `APIKeyMiddleware` to validate the `X-API-Key` header:
 ### Generating API Keys
 
 **Linux/Mac**:
+
 ```bash
 openssl rand -hex 32
 ```
 
 **Windows PowerShell**:
+
 ```bash
 -join ((48..57) + (65..90) + (97..122) | Get-Random -Count 32 | % {[char]$_})
 ```
@@ -229,6 +237,7 @@ API_KEY = _KEY
 #### Elementary/Middle/Highschool Endpoints
 
 **Request**:
+
 ```json
 POST /chat/elementary
 Headers: X-API-Key: your-backend-api-key
@@ -242,6 +251,7 @@ Body: {
 ```
 
 **Response**:
+
 ```json
 {
   "response": "AI stands for Artificial Intelligence..."
@@ -251,12 +261,13 @@ Body: {
 #### Full Chat Endpoint
 
 **Request**:
+
 ```json
 POST /chat
 Headers: X-API-Key: your-backend-api-key
 Body: {
   "prompt": "Explain AI",
-  "model": "gpt-4o-mini",
+  "model": "gpt-4.1-mini",
   "max_tokens": 250,
   "temperature": 0.7,
   "system_message": "You are a helpful teacher",
@@ -268,10 +279,11 @@ Body: {
 ```
 
 **Response**:
+
 ```json
 {
   "response": "AI is...",
-  "model": "gpt-4o-mini",
+  "model": "gpt-4.1-mini",
   "tokens_used": {
     "prompt": 15,
     "completion": 45,
@@ -299,7 +311,7 @@ response = requests.post(
     headers={"X-API-Key": "your-backend-api-key"},
     json={
         "prompt": "What about cats?",
-        "model": "gpt-4o-mini",
+        "model": "gpt-4.1-mini",
         "max_tokens": 300,
         "temperature": 0.7,
         "system_message": "You are a computer science teacher",
@@ -315,36 +327,36 @@ response = requests.post(
 
 ```javascript
 // Elementary endpoint
-fetch('https://your-backend.run.app/chat/elementary', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-        'X-API-Key': 'your-backend-api-key'
-    },
-    body: JSON.stringify({
-        prompt: 'Hello'
-    })
+fetch("https://your-backend.run.app/chat/elementary", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "X-API-Key": "your-backend-api-key",
+  },
+  body: JSON.stringify({
+    prompt: "Hello",
+  }),
 })
-.then(res => res.json())
-.then(data => console.log(data.response));
+  .then((res) => res.json())
+  .then((data) => console.log(data.response));
 
 // With conversation history
-fetch('https://your-backend.run.app/chat/elementary', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-        'X-API-Key': 'your-backend-api-key'
-    },
-    body: JSON.stringify({
-        prompt: 'What about that?',
-        history: [
-            {"role": "user", "content": "Tell me about AI"},
-            {"role": "assistant", "content": "AI is..."}
-        ]
-    })
+fetch("https://your-backend.run.app/chat/elementary", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "X-API-Key": "your-backend-api-key",
+  },
+  body: JSON.stringify({
+    prompt: "What about that?",
+    history: [
+      { role: "user", content: "Tell me about AI" },
+      { role: "assistant", content: "AI is..." },
+    ],
+  }),
 })
-.then(res => res.json())
-.then(data => console.log(data.response));
+  .then((res) => res.json())
+  .then((data) => console.log(data.response));
 ```
 
 ### cURL
@@ -374,7 +386,7 @@ curl -X POST "https://your-backend.run.app/chat" \
   -H "Content-Type: application/json" \
   -d '{
     "prompt": "Explain AI",
-    "model": "gpt-4o-mini",
+    "model": "gpt-4.1-mini",
     "max_tokens": 250,
     "history": [
       {"role": "user", "content": "What is programming?"},
@@ -409,7 +421,7 @@ def chat_with_ai(user_message, history):
         for user_msg, bot_msg in history:
             api_history.append({"role": "user", "content": user_msg})
             api_history.append({"role": "assistant", "content": bot_msg})
-        
+
         # Send request with history and API key
         response = requests.post(
             f"{BACKEND_URL}/chat/elementary",
@@ -484,22 +496,26 @@ except Exception as e:
 Edit `main.py` to customize:
 
 ### Rate Limiting
+
 ```python
 @limiter.limit("10/minute")  # Change rate here
 ```
 
 ### Model Selection
+
 ```python
 class ChatRequest(BaseModel):
-    model: str = "gpt-4o-mini"  # Change default model
+    model: str = "gpt-4.1-mini"  # Change default model
 ```
 
 ### Token Limits
+
 ```python
 max_tokens: int = 250  # Adjust response length
 ```
 
 ### System Prompts
+
 ```python
 # In each endpoint, modify system_message
 system_message="You are a friendly teacher..."
@@ -510,6 +526,7 @@ system_message="You are a friendly teacher..."
 ### Authentication Implementation
 
 The backend uses middleware-based authentication:
+
 - `APIKeyMiddleware` validates `X-API-Key` header
 - Executes before rate limiting
 - Excludes public endpoints: `/`, `/health`, `/docs`, `/redoc`, `/openapi.json`
@@ -518,6 +535,7 @@ The backend uses middleware-based authentication:
 ### Security Features
 
 **What We Do**:
+
 - ✅ API key authentication on all endpoints (except public ones)
 - ✅ Rate limiting prevents abuse (10 req/min per IP)
 - ✅ No data persistence
@@ -526,6 +544,7 @@ The backend uses middleware-based authentication:
 - ✅ Middleware-based security
 
 **What We Don't Do**:
+
 - ❌ Store user data
 - ❌ Log conversations
 - ❌ Collect personal information
@@ -565,11 +584,13 @@ Then redeploy. **Note**: This removes all authentication protection!
 ### Increasing Limits
 
 For classroom use with many students, consider:
+
 1. Use screen sharing for demos
 2. Request limit increase
 3. Deploy your own instance
 
 To modify rate limits in `main.py`:
+
 ```python
 @limiter.limit("20/minute")  # Increase to 20/min
 ```
@@ -578,22 +599,25 @@ To modify rate limits in `main.py`:
 
 ### Estimates (as of 2024)
 
-**gpt-4o-mini pricing**:
+**gpt-4.1-mini pricing**:
+
 - Input: $0.15 per 1M tokens
 - Output: $0.60 per 1M tokens
 
 **Typical request** (250 tokens output):
+
 - ~$0.0002 per request
 - ~$0.20 per 1000 requests
 - ~$2 per 10,000 requests
 
 **Monthly estimates**:
+
 - 100 students × 20 requests/day × 20 days = 40,000 requests
 - Cost: ~$8/month
 
 ### Cost Optimization
 
-1. **Use efficient models**: gpt-4o-mini is 10x cheaper than GPT-4
+1. **Use efficient models**: gpt-4.1-mini is 10x cheaper than GPT-4
 2. **Limit max_tokens**: Keep responses concise (250-400 tokens)
 3. **Rate limiting**: Prevents abuse and runaway costs
 4. **Monitor usage**: Set up billing alerts in Google Cloud
@@ -604,6 +628,7 @@ To modify rate limits in `main.py`:
 ### Cloud Run Console
 
 View:
+
 - Request volume
 - Error rates
 - Response times
@@ -613,6 +638,7 @@ View:
 ### Logging
 
 View logs:
+
 ```bash
 gcloud run services logs read educational-llm-proxy \
   --region=asia-southeast2 \
@@ -622,33 +648,40 @@ gcloud run services logs read educational-llm-proxy \
 ### Common Issues
 
 #### 401 Unauthorized
+
 - Check that `X-API-Key` header is included
 - Verify the API key is correct
 
 #### 403 Forbidden
+
 - The API key is invalid
 - Re-encode and update the key
 - Check environment variable in Cloud Run
 
 #### 429 Too Many Requests
+
 - Rate limit exceeded (10/min per IP)
 - Wait 1 minute and try again
 
 #### 500 Server Error
+
 - Check backend logs in Cloud Run console
 - Verify `API_KEY` and `OPENAI_API_KEY` are set in Cloud Run environment variables
 
 #### "OpenAI API key not configured"
+
 - Check environment variable is set
 - Verify Cloud Run has the env var configured
 - Redeploy if needed
 
 #### Slow responses
+
 - First request may take 5-10s (cold start)
 - Subsequent requests faster
 - Reduce max_tokens for faster responses
 
 #### Connection timeouts
+
 - Check OpenAI API status
 - Verify internet connectivity
 - Increase Cloud Run timeout if needed
@@ -658,6 +691,7 @@ gcloud run services logs read educational-llm-proxy \
 ### Testing Prompts
 
 Create test scripts:
+
 ```python
 # test_prompts.py
 import requests
@@ -688,6 +722,7 @@ uvicorn main:app --reload
 ### Debug Mode
 
 Add to `main.py`:
+
 ```python
 import logging
 logging.basicConfig(level=logging.DEBUG)
@@ -696,6 +731,7 @@ logging.basicConfig(level=logging.DEBUG)
 ### Dependencies
 
 From `requirements.txt`:
+
 ```
 fastapi==0.104.1
 uvicorn==0.24.0
@@ -705,6 +741,7 @@ pydantic==2.5.0
 ```
 
 Update:
+
 ```bash
 pip install --upgrade -r requirements.txt
 ```
@@ -712,6 +749,7 @@ pip install --upgrade -r requirements.txt
 ## Production Considerations
 
 For production deployment with higher traffic:
+
 1. **Keep authentication** for security
 2. **Increase rate limits** appropriately
 3. **Set up monitoring** and alerts
@@ -726,6 +764,7 @@ For production deployment with higher traffic:
 ⚠️ **All API endpoints now require `X-API-Key` header** (except `/`, `/health`, `/docs`)
 
 ### Before:
+
 ```python
 requests.post(
     f"{BACKEND_URL}/chat/elementary",
@@ -734,6 +773,7 @@ requests.post(
 ```
 
 ### After:
+
 ```python
 requests.post(
     f"{BACKEND_URL}/chat/elementary",
@@ -754,6 +794,7 @@ requests.post(
 ### Conversation History Support
 
 All endpoints now support optional `history` parameter:
+
 - Format: `[{"role": "user", "content": "..."}, {"role": "assistant", "content": "..."}]`
 - Enables multi-turn conversations
 - Maintains context across requests
@@ -762,6 +803,7 @@ All endpoints now support optional `history` parameter:
 ## Support
 
 Issues or questions about the backend?
+
 - Check troubleshooting guide above
 - Review Cloud Run logs
 - Open GitHub issue

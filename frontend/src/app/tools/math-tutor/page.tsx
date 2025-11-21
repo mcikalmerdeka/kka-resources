@@ -35,7 +35,7 @@ Gunakan contoh atau analogi jika membantu pemahaman.`;
     try {
       const response = await chatService.sendMessage({
         prompt: prompt,
-        model: "gpt-4o-mini"
+        model: "gpt-4.1-mini"
       }, 'middle');
       
       setSolution(response.response);

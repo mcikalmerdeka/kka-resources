@@ -43,8 +43,8 @@ Access all tools instantly via our modern web interface. No setup required!
 
 You can still run each tool individually in Google Colab to see how the code works.
 
-| Application                          | Description                                        | Difficulty   | Phase | Open in Colab                                                                                                                                                  |
-| ------------------------------------ | -------------------------------------------------- | ------------ | ----- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Application                    | Description                                        | Difficulty   | Phase | Open in Colab                                                                                                                                                       |
+| ------------------------------ | -------------------------------------------------- | ------------ | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 01. 🤖**Simple Chatbot**       | Basic Q&A chatbot to learn about AI conversations  | Beginner     | C     | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1U0GQ8Vcc7No2yjdh251V-FayQ1BvqIuE?usp=sharing) |
 | 02. 📖**Story Generator**      | Create creative stories with AI                    | Beginner     | C     | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1gA4nuj1dmEvljH55Y7_4RtVQb5EiWn39?usp=sharing) |
 | 03. 💻**Code Explainer**       | Understand programming code with AI explanations   | Intermediate | D-F   | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1-hEmzR9qZupCC1sL0WWPcUgI6AU_6u1d?usp=sharing) |
@@ -135,12 +135,12 @@ New to using these tools? Check out our comprehensive guides:
 
 These applications are designed to support the official Indonesian AI curriculum:
 
-| **Phase** | **Level**     | **Applications**                                           | **Learning Focus**                            |
-| --------------- | ------------------- | ---------------------------------------------------------------- | --------------------------------------------------- |
-| C               | Kelas 5-6 SD        | Simple Chatbot, Story Generator, Math Tutor, Language Translator | Basic AI interaction, creativity, problem-solving   |
-| D               | Kelas 7-9 SMP       | Math Tutor, Language Translator, Code Explainer, Quiz Generator  | AI as learning tool, critical thinking, programming |
-| E               | Kelas 10 SMA/SMK    | Code Explainer, Math Tutor, Quiz Generator                       | Advanced AI understanding, technical depth          |
-| F               | Kelas 11-12 SMA/SMK | Code Explainer, Quiz Generator                                   | Professional application, collaboration             |
+| **Phase** | **Level**           | **Applications**                                                 | **Learning Focus**                                  |
+| --------- | ------------------- | ---------------------------------------------------------------- | --------------------------------------------------- |
+| C         | Kelas 5-6 SD        | Simple Chatbot, Story Generator, Math Tutor, Language Translator | Basic AI interaction, creativity, problem-solving   |
+| D         | Kelas 7-9 SMP       | Math Tutor, Language Translator, Code Explainer, Quiz Generator  | AI as learning tool, critical thinking, programming |
+| E         | Kelas 10 SMA/SMK    | Code Explainer, Math Tutor, Quiz Generator                       | Advanced AI understanding, technical depth          |
+| F         | Kelas 11-12 SMA/SMK | Code Explainer, Quiz Generator                                   | Professional application, collaboration             |
 
 ### Teaching Tips
 
@@ -176,7 +176,7 @@ These applications are designed to support the official Indonesian AI curriculum
 ### Why This Architecture?
 
 - **Secure**: API key authentication prevents unauthorized access
-- **Cost-effective**: Shared backend with efficient gpt-4o-mini model
+- **Cost-effective**: Shared backend with efficient gpt-4.1-mini model
 - **Safe**: Rate limiting prevents abuse, no conversation storage
 - **Educational**: Age-appropriate system prompts for each phase
 - **Simple**: Students just run notebooks with obfuscated credentials
@@ -307,7 +307,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
 - **Frontend**: Next.js 14 (Web App) / Google Colab + Gradio (Notebooks)
 - **Backend**: FastAPI + Google Cloud Run
-- **AI Model**: OpenAI GPT-4o-mini
+- **AI Model**: OpenAI GPT-4.1-mini
 - **Language**: Python 3.11+
 - **Dependencies**: See `pyproject.toml`
 
