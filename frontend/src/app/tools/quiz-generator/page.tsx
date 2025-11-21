@@ -51,7 +51,7 @@ Pastikan soal-soal edukatif dan sesuai untuk pelajar.`;
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
       <div className="max-w-5xl mx-auto">
-        <Link href="/" className="inline-flex items-center text-gray-600 hover:text-blue-600 mb-6 transition-colors">
+        <Link href="/#implementations" className="inline-flex items-center text-gray-600 hover:text-blue-600 mb-6 transition-colors">
           <ArrowLeft className="w-4 h-4 mr-2" />
           Kembali ke Dashboard
         </Link>

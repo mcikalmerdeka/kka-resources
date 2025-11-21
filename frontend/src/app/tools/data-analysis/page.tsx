@@ -244,7 +244,7 @@ For the JSON data, ensure the "name" field is used for the X-axis category.
 
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-8">
-      <Link href="/" className="inline-flex items-center text-gray-600 hover:text-blue-600 mb-6 transition-colors">
+      <Link href="/#implementations" className="inline-flex items-center text-gray-600 hover:text-blue-600 mb-6 transition-colors">
         <ArrowLeft className="w-4 h-4 mr-2" />
         Kembali ke Dashboard
       </Link>

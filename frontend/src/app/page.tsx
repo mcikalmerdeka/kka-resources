@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Bot, BookOpen, Code, Calculator, Languages, BrainCircuit, HelpCircle, BarChart2, LayoutGrid } from 'lucide-react';
 import { GlassDonut } from '@/components/GlassDonut';
 import { GithubIcon, LinkedinIcon, InstagramIcon } from '@/components/Icons';
@@ -103,6 +103,29 @@ export default function Home() {
 
   const [activeTab, setActiveTab] = useState<'implementations' | 'theory'>('implementations');
 
+  useEffect(() => {
+    // Check hash on mount
+    const hash = window.location.hash;
+    if (hash === '#implementations') {
+      setActiveTab('implementations');
+      // Small timeout to ensure DOM is ready
+      setTimeout(() => {
+        const element = document.getElementById('content-section');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    } else if (hash === '#theory') {
+      setActiveTab('theory');
+      setTimeout(() => {
+        const element = document.getElementById('content-section');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
@@ -167,7 +190,7 @@ export default function Home() {
       </section>
 
       {/* Content Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+      <div id="content-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         {activeTab === 'implementations' ? (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 animate-in fade-in slide-in-from-bottom-4 duration-500">
             {tools.map((tool) => (
