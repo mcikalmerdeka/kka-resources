@@ -5,6 +5,7 @@ Supports Phase C (Elementary), Phase D (Middle School), and Phase E-F (High Scho
 from fastapi import APIRouter, HTTPException
 import os
 import httpx
+import json
 from models import ChatRequest, ChatResponse
 from prompts.prompts import get_system_prompt
 
