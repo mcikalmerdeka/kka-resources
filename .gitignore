@@ -69,6 +69,7 @@ others/
 utils/
 INSTRUCTIONS.md
 test.py
+design-inspirations/
 
 # Cloud
 .gcloud/
