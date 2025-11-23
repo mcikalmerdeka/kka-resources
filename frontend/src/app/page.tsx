@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Bot, BookOpen, Code, Calculator, Languages, BrainCircuit, HelpCircle, BarChart2, LayoutGrid, Brain, Leaf, Scale, ExternalLink } from 'lucide-react';
+import { Bot, BookOpen, Code, Calculator, Languages, BrainCircuit, HelpCircle, BarChart2, LayoutGrid, Brain, Leaf, Scale, Unlock, ExternalLink } from 'lucide-react';
 import { GlassDonut } from '@/components/GlassDonut';
 import { GithubIcon, LinkedinIcon, InstagramIcon } from '@/components/Icons';
 import { ToolCard } from '@/components/ToolCard';
@@ -98,6 +98,13 @@ export default function Home() {
       href: "/theory/ai-bias",
       icon: <Scale className="w-6 h-6" />,
       color: "bg-rose-500"
+    },
+    {
+      title: "Open vs Closed Source AI",
+      description: "Understand the difference between open (like DeepSeek) and closed AI.",
+      href: "/theory/open-vs-closed",
+      icon: <Unlock className="w-6 h-6" />,
+      color: "bg-cyan-500"
     }
   ];
 
