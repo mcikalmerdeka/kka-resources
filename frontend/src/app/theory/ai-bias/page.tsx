@@ -1,13 +1,13 @@
-import { Scale, AlertTriangle, Users, CheckCircle, Brain, ArrowLeft } from 'lucide-react';
+import { Scale, AlertTriangle, Users, CheckCircle, Brain, ArrowLeft, Database, Code, HeartPulse, Zap } from 'lucide-react';
 import Link from 'next/link';
 
 export default function AiBias() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <Link href="/#theory" className="inline-flex items-center text-gray-600 hover:text-blue-600 mb-8 transition-colors">
+        <Link href="/" className="inline-flex items-center text-gray-600 hover:text-blue-600 mb-8 transition-colors">
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Kembali ke Dashboard
+          Back to Home
         </Link>
 
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
@@ -23,7 +23,6 @@ export default function AiBias() {
           </div>
 
           <div className="p-8 md:p-12 space-y-12">
-            
             {/* Introduction */}
             <div className="prose max-w-none text-gray-600">
               <p className="text-lg leading-relaxed">
@@ -39,27 +38,77 @@ export default function AiBias() {
               </div>
             </div>
 
-            {/* Section 1: Real Examples */}
+            <hr className="border-gray-200" />
+
+            {/* Section 2: Types of Bias */}
+            <section>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">2. Jenis-Jenis Bias: Dari Mana Datangnya?</h2>
+              <div className="grid md:grid-cols-3 gap-6">
+                <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                  <div className="bg-blue-100 w-10 h-10 rounded-lg flex items-center justify-center mb-4">
+                    <Database className="w-6 h-6 text-blue-600" />
+                  </div>
+                  <h3 className="font-bold text-gray-900 mb-2">Bias Data</h3>
+                  <p className="text-sm text-gray-600">
+                    Data latihannya tidak mewakili semua orang. Contoh: AI dokter dilatih cuma pakai foto laki-laki.
+                  </p>
+                </div>
+                <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                  <div className="bg-purple-100 w-10 h-10 rounded-lg flex items-center justify-center mb-4">
+                    <Code className="w-6 h-6 text-purple-600" />
+                  </div>
+                  <h3 className="font-bold text-gray-900 mb-2">Bias Algoritma</h3>
+                  <p className="text-sm text-gray-600">
+                    Cara komputer memproses salah fokus. Contoh: Sosmed lebih suka berita heboh (clickbait).
+                  </p>
+                </div>
+                <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                  <div className="bg-orange-100 w-10 h-10 rounded-lg flex items-center justify-center mb-4">
+                    <Users className="w-6 h-6 text-orange-600" />
+                  </div>
+                  <h3 className="font-bold text-gray-900 mb-2">Bias Manusia</h3>
+                  <p className="text-sm text-gray-600">
+                    Prasangka pembuatnya terbawa ke sistem. Contoh: Lupa memikirkan budaya negara lain.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <hr className="border-gray-200" />
+
+            {/* Section 3: Real Examples */}
             <section>
               <div className="flex items-start">
                 <div className="bg-orange-100 p-3 rounded-lg mr-4 shrink-0">
                   <AlertTriangle className="w-6 h-6 text-orange-600" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Contoh Nyata: Ketika AI Salah Belajar</h2>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">3. Contoh Nyata: Ketika AI Salah Belajar</h2>
                   <p className="text-gray-600 mb-6">Ini bukan cuma teori. Berikut adalah kasus nyata di mana AI bertindak tidak adil:</p>
                   
-                  <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
                     <div className="bg-gray-50 p-5 rounded-xl border border-gray-100">
                       <h3 className="font-bold text-gray-900 mb-2">Kasus Wajah (Joy Buolamwini)</h3>
                       <p className="text-gray-600 text-sm leading-relaxed">
-                        Teknologi pengenal wajah sering gagal mengenali wanita berkulit gelap. Kenapa? Karena data latihannya kebanyakan foto orang kulit putih. AI tidak diajari melihat keberagaman wajah manusia.
+                        Teknologi pengenal wajah sering gagal mengenali wanita berkulit gelap. Kenapa? Karena data latihannya kebanyakan foto orang kulit putih.
                       </p>
                     </div>
                     <div className="bg-gray-50 p-5 rounded-xl border border-gray-100">
                       <h3 className="font-bold text-gray-900 mb-2">Kasus Rekrutmen Amazon</h3>
                       <p className="text-gray-600 text-sm leading-relaxed">
-                        Alat seleksi CV otomatis Amazon mendiskriminasi pelamar wanita. Karena belajar dari data 10 tahun terakhir yang didominasi pria, AI menyimpulkan "laki-laki = kandidat bagus".
+                        Alat seleksi CV otomatis Amazon mendiskriminasi pelamar wanita. Karena belajar dari data 10 tahun terakhir yang didominasi pria.
+                      </p>
+                    </div>
+                    <div className="bg-red-50 p-5 rounded-xl border border-red-100">
+                      <div className="flex items-center mb-2">
+                        <HeartPulse className="w-5 h-5 text-red-600 mr-2" />
+                        <h3 className="font-bold text-red-900">Kasus Kesehatan (Bahaya Nyata!)</h3>
+                      </div>
+                      <p className="text-red-800 text-sm leading-relaxed mb-2">
+                        <strong>Deteksi Kanker Kulit:</strong> AI sering dilatih pakai foto kulit terang, jadi tidak akurat untuk kulit gelap.
+                      </p>
+                      <p className="text-red-800 text-sm leading-relaxed">
+                        <strong>Oximeter:</strong> Alat pengukur oksigen darah ternyata kurang akurat untuk kulit gelap, bisa menyebabkan kesalahan diagnosa fatal.
                       </p>
                     </div>
                   </div>
@@ -67,57 +116,33 @@ export default function AiBias() {
               </div>
             </section>
 
-            {/* Section 2: Why it happens */}
+            <hr className="border-gray-200" />
+
+            {/* Section 4: Why Dangerous */}
             <section>
               <div className="flex items-start">
-                <div className="bg-blue-100 p-3 rounded-lg mr-4 shrink-0">
-                  <Users className="w-6 h-6 text-blue-600" />
+                <div className="bg-yellow-100 p-3 rounded-lg mr-4 shrink-0">
+                  <Zap className="w-6 h-6 text-yellow-600" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Mengapa Bias Bisa Terjadi?</h2>
-                  <div className="space-y-4">
-                    <div className="flex items-start">
-                      <div className="w-8 h-8 bg-blue-50 rounded-full flex items-center justify-center text-blue-600 font-bold mr-3 shrink-0">1</div>
-                      <div>
-                        <h3 className="font-bold text-gray-900">Data Masa Lalu</h3>
-                        <p className="text-gray-600">AI belajar dari sejarah. Jika sejarah kita penuh ketidakadilan, AI akan meniru pola tersebut.</p>
-                      </div>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">4. Mengapa Bias AI Sangat Berbahaya?</h2>
+                  <p className="text-gray-600 mb-4">
+                    Bukankah manusia juga bias? Benar, tapi AI punya dua hal yang membuatnya lebih menakutkan:
+                  </p>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-100">
+                      <h3 className="font-bold text-yellow-900 mb-2">1. Skala (Scale)</h3>
+                      <p className="text-sm text-yellow-800">
+                        Satu orang HRD bias mungkin menolak 10 pelamar. Satu AI bias bisa menolak <strong>1 juta pelamar</strong> dalam sekejap.
+                      </p>
                     </div>
-                    <div className="flex items-start">
-                      <div className="w-8 h-8 bg-blue-50 rounded-full flex items-center justify-center text-blue-600 font-bold mr-3 shrink-0">2</div>
-                      <div>
-                        <h3 className="font-bold text-gray-900">Tim yang Tidak Beragam</h3>
-                        <p className="text-gray-600">Jika pembuat AI hanya dari satu kelompok yang sama, mereka mungkin tidak sadar ada bias dalam sistem mereka.</p>
-                      </div>
+                    <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-100">
+                      <h3 className="font-bold text-yellow-900 mb-2">2. Kecepatan (Speed)</h3>
+                      <p className="text-sm text-yellow-800">
+                        AI bekerja sangat cepat. Kesalahan bias bisa menyebar ke seluruh dunia sebelum kita sadar ada yang salah.
+                      </p>
                     </div>
                   </div>
-                </div>
-              </div>
-            </section>
-
-            {/* Section 3: What can we do */}
-            <section>
-              <div className="flex items-start">
-                <div className="bg-emerald-100 p-3 rounded-lg mr-4 shrink-0">
-                  <CheckCircle className="w-6 h-6 text-emerald-600" />
-                </div>
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">3. Apa yang Bisa Kita Lakukan?</h2>
-                  <p className="text-gray-600 mb-4">Sebagai siswa, kamu juga bisa berperan!</p>
-                  <ul className="space-y-3">
-                    <li className="flex items-center bg-emerald-50 p-3 rounded-lg text-emerald-900">
-                      <Brain className="w-5 h-5 mr-3 text-emerald-600" />
-                      <span><strong>Jangan Percaya 100%:</strong> Selalu cek ulang informasi dari AI.</span>
-                    </li>
-                    <li className="flex items-center bg-emerald-50 p-3 rounded-lg text-emerald-900">
-                      <Scale className="w-5 h-5 mr-3 text-emerald-600" />
-                      <span><strong>Tanya "Apakah Ini Adil?":</strong> Siapa yang membuat ini? Data apa yang dipakai?</span>
-                    </li>
-                    <li className="flex items-center bg-emerald-50 p-3 rounded-lg text-emerald-900">
-                      <Users className="w-5 h-5 mr-3 text-emerald-600" />
-                      <span><strong>Belajar Etika:</strong> Buatlah teknologi yang inklusif di masa depan.</span>
-                    </li>
-                  </ul>
                 </div>
               </div>
             </section>
@@ -132,7 +157,6 @@ export default function AiBias() {
                 Mari bangun teknologi yang tidak hanya cerdas, tapi juga baik hati dan adil untuk semua. 🌍🤝
               </p>
             </div>
-
           </div>
         </div>
       </div>
