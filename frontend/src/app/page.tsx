@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Bot, BookOpen, Code, Calculator, Languages, BrainCircuit, HelpCircle, BarChart2, LayoutGrid, Brain, Leaf, Scale, Unlock, Smartphone, Copyright, Ghost, ExternalLink } from 'lucide-react';
+import { Bot, BookOpen, Code, Calculator, Languages, BrainCircuit, HelpCircle, BarChart2, LayoutGrid, Brain, Leaf, Scale, Unlock, Smartphone, Copyright, Ghost, ExternalLink, Gamepad2 } from 'lucide-react';
 import { GlassDonut } from '@/components/GlassDonut';
 import { GithubIcon, LinkedinIcon, InstagramIcon } from '@/components/Icons';
 import { ToolCard } from '@/components/ToolCard';
@@ -126,6 +126,13 @@ export default function Home() {
       href: "/theory/ai-hallucinations",
       icon: <Ghost className="w-6 h-6" />,
       color: "bg-red-600"
+    },
+    {
+      title: "NVIDIA AI Revolution",
+      description: "From gaming graphics to the engine of the AI revolution.",
+      href: "/theory/nvidia-ai-revolution",
+      icon: <Gamepad2 className="w-6 h-6" />,
+      color: "bg-green-600"
     }
   ];
 
