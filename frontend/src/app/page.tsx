@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Bot, BookOpen, Code, Calculator, Languages, BrainCircuit, HelpCircle, BarChart2, LayoutGrid, Brain, Leaf, Scale, Unlock, Smartphone, Copyright, ExternalLink } from 'lucide-react';
+import { Bot, BookOpen, Code, Calculator, Languages, BrainCircuit, HelpCircle, BarChart2, LayoutGrid, Brain, Leaf, Scale, Unlock, Smartphone, Copyright, Ghost, ExternalLink } from 'lucide-react';
 import { GlassDonut } from '@/components/GlassDonut';
 import { GithubIcon, LinkedinIcon, InstagramIcon } from '@/components/Icons';
 import { ToolCard } from '@/components/ToolCard';
@@ -119,6 +119,13 @@ export default function Home() {
       href: "/theory/ai-copyright",
       icon: <Copyright className="w-6 h-6" />,
       color: "bg-amber-600"
+    },
+    {
+      title: "AI Hallucinations",
+      description: "When AI confidently lies. Why it happens and how to spot it.",
+      href: "/theory/ai-hallucinations",
+      icon: <Ghost className="w-6 h-6" />,
+      color: "bg-red-600"
     }
   ];
 
