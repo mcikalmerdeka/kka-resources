@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Bot, BookOpen, Code, Calculator, Languages, BrainCircuit, HelpCircle, BarChart2, LayoutGrid, Brain, Leaf, Scale, Unlock, ExternalLink } from 'lucide-react';
+import { Bot, BookOpen, Code, Calculator, Languages, BrainCircuit, HelpCircle, BarChart2, LayoutGrid, Brain, Leaf, Scale, Unlock, Smartphone, Copyright, ExternalLink } from 'lucide-react';
 import { GlassDonut } from '@/components/GlassDonut';
 import { GithubIcon, LinkedinIcon, InstagramIcon } from '@/components/Icons';
 import { ToolCard } from '@/components/ToolCard';
@@ -105,6 +105,20 @@ export default function Home() {
       href: "/theory/open-vs-closed",
       icon: <Unlock className="w-6 h-6" />,
       color: "bg-cyan-500"
+    },
+    {
+      title: "Social Media Algorithms",
+      description: "Why your TikTok feed is different from your friends'.",
+      href: "/theory/social-media-algorithms",
+      icon: <Smartphone className="w-6 h-6" />,
+      color: "bg-purple-600"
+    },
+    {
+      title: "AI & Copyright Issues",
+      description: "Who owns AI art? The legal battle between artists and AI.",
+      href: "/theory/ai-copyright",
+      icon: <Copyright className="w-6 h-6" />,
+      color: "bg-amber-600"
     }
   ];
 
