@@ -5,9 +5,9 @@ export default function SocialMediaAlgorithms() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <Link href="/" className="inline-flex items-center text-gray-600 hover:text-blue-600 mb-8 transition-colors">
+        <Link href="/#theory" className="inline-flex items-center text-gray-600 hover:text-blue-600 mb-8 transition-colors">
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Home
+          Kembali ke Dashboard
         </Link>
 
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
