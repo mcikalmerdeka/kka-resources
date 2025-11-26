@@ -164,7 +164,6 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      {/* Hero Section */}
       <section className="relative overflow-hidden h-[900px]">
         <GlassDonut />
 

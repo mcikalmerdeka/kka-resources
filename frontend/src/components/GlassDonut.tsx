@@ -50,7 +50,7 @@ export function GlassDonut() {
 
     new HDRLoader()
       .setPath('https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/')
-      .load('aircraft_workshop_01_1k.hdr', 
+      .load('kloppenheim_06_1k.hdr', 
         function (texture) {
           const envMap = pmremGenerator.fromEquirectangular(texture).texture;
           scene.environment = envMap;
