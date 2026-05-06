@@ -27,7 +27,7 @@ async def chat(chat_request: ChatRequest):
     Main chat endpoint supporting OpenAI models with full customization.
     
     - **prompt**: User's question or message
-    - **model**: OpenAI model to use (default: gpt-4.1-mini)
+    - **model**: OpenAI model to use (default: gpt-5.4-nano-2026-03-17)
     - **max_tokens**: Maximum tokens in response
     - **temperature**: Creativity level (0-1)
     - **system_message**: Optional custom system prompt
@@ -149,7 +149,7 @@ async def chat_elementary(request: ChatRequest):
     Supports conversation history for multi-turn conversations.
     """
     # Override settings for elementary level
-    request.model = "gpt-4.1-mini"
+    request.model = "gpt-5.4-nano-2026-03-17"
     request.max_tokens = 750
     request.temperature = 0.5
     if not request.system_message:
@@ -169,7 +169,7 @@ async def chat_middle(request: ChatRequest):
     Supports conversation history for multi-turn conversations.
     """
     # Override settings for middle school level
-    request.model = "gpt-4.1-mini"
+    request.model = "gpt-5.4-nano-2026-03-17"
     request.max_tokens = 750
     request.temperature = 0.5
     if not request.system_message:
@@ -189,7 +189,7 @@ async def chat_highschool(request: ChatRequest):
     Supports conversation history for multi-turn conversations.
     """
     # Override settings for high school level
-    request.model = "gpt-4.1-mini"
+    request.model = "gpt-5.4-nano-2026-03-17"
     request.max_tokens = 750
     request.temperature = 0.5
     if not request.system_message:

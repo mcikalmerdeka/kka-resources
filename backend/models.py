@@ -13,7 +13,7 @@ from typing import Optional, List, Dict
 # Chat request model
 class ChatRequest(BaseModel):
     prompt: str
-    model: str = "gpt-4.1-mini"  # default model (cheapest and best for education)
+    model: str = "gpt-5.4-nano-2026-03-17"  # default model (cheapest and best for education)
     max_tokens: int = 750
     temperature: float = 0.5
     system_message: Optional[str] = None
