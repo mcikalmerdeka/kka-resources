@@ -2,8 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import { chatService } from '@/lib/api';
-import { Upload, FileText, BarChart2, Loader2, Info, ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
+import { Upload, FileText, BarChart2, Loader2, Info } from 'lucide-react';
 import * as XLSX from 'xlsx';
 import {
   BarChart,
@@ -22,6 +21,7 @@ import {
 } from 'recharts';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { PageWrapper } from '@/components/PageWrapper';
 
 // --- Types ---
 interface AnalysisResult {
@@ -51,7 +51,6 @@ Mei,160,120`;
 
 // --- Component ---
 export default function DataAnalysisPage() {
-  // State
   const [inputText, setInputText] = useState('');
   const [context, setContext] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -59,7 +58,6 @@ export default function DataAnalysisPage() {
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Handlers
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -105,7 +103,7 @@ FORMAT:
 {
   "graphType": "bar" | "line" | "pie",
   "graphTitle": "Title of the Graph",
-  "dataKeys": ["key1", "key2"], // Keys for the data series (excluding the category key)
+  "dataKeys": ["key1", "key2"],
   "data": [
     { "name": "Category1", "key1": 10, "key2": 20 },
     { "name": "Category2", "key1": 15, "key2": 25 }
@@ -132,10 +130,8 @@ For the JSON data, ensure the "name" field is used for the X-axis category.
         system_message: systemPrompt,
       }, 'highschool');
 
-      // Parse Response
       const content = response.response;
       
-      // Extract JSON
       const jsonMatch = content.match(/```json\n([\s\S]*?)\n```/);
       let graphData = null;
       let analysisText = content;
@@ -145,7 +141,6 @@ For the JSON data, ensure the "name" field is used for the X-axis category.
           const jsonStr = jsonMatch[1];
           const parsed = JSON.parse(jsonStr);
           graphData = parsed;
-          // Remove the JSON block from the analysis text to avoid duplication
           analysisText = content.replace(jsonMatch[0], '').trim();
         } catch (e) {
           console.error('Failed to parse JSON from AI response', e);
@@ -168,7 +163,6 @@ For the JSON data, ensure the "name" field is used for the X-axis category.
     }
   };
 
-  // Render Graph
   const renderGraph = () => {
     if (!result?.graphData) return null;
 
@@ -225,7 +219,6 @@ For the JSON data, ensure the "name" field is used for the X-axis category.
       );
     }
 
-    // Default to Bar Chart
     return (
       <ResponsiveContainer width="100%" height={400}>
         <BarChart {...CommonProps}>
@@ -243,155 +236,154 @@ For the JSON data, ensure the "name" field is used for the X-axis category.
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-6 space-y-8">
-      <Link href="/#implementations" className="inline-flex items-center text-gray-600 hover:text-blue-600 mb-6 transition-colors">
-        <ArrowLeft className="w-4 h-4 mr-2" />
-        Kembali ke Dashboard
-      </Link>
-
-      {/* Header */}
-      <div className="text-center space-y-4">
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-          Simple Data Analysis
-        </h1>
-        <p className="text-gray-600 max-w-2xl mx-auto">
-          Upload data Anda atau tempel di bawah untuk menghasilkan wawasan dan visualisasi secara instan.
-          Berguna untuk menganalisis nilai, penjualan, atau hasil survei.
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Left Column: Input */}
-        <div className="lg:col-span-1 space-y-6">
-          
-          {/* Data Input */}
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-4">
-            <div className="flex justify-between items-center">
-              <h2 className="font-semibold text-gray-800 flex items-center gap-2">
-                <FileText className="w-5 h-5 text-blue-500" />
-                Input Data
-              </h2>
-              <button
-                onClick={() => fileInputRef.current?.click()}
-                className="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1"
-              >
-                <Upload className="w-4 h-4" />
-                Upload File
-              </button>
-              <input
-                type="file"
-                ref={fileInputRef}
-                onChange={handleFileUpload}
-                accept=".txt,.csv,.xlsx,.xls"
-                className="hidden"
-              />
-            </div>
-            
-            <textarea
-              value={inputText}
-              onChange={(e) => setInputText(e.target.value)}
-              placeholder="Masukkan data Anda di sini..."
-              className="w-full h-64 p-4 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all resize-none font-mono text-sm"
-            />
-
-            {/* Example Buttons */}
-            <div className="flex gap-2 overflow-x-auto pb-2">
-              <button
-                onClick={() => setInputText(EXAMPLE_STUDENT_DATA)}
-                className="px-3 py-1.5 text-xs bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors whitespace-nowrap"
-              >
-                Example: Nilai Siswa
-              </button>
-              <button
-                onClick={() => setInputText(EXAMPLE_SALES_DATA)}
-                className="px-3 py-1.5 text-xs bg-purple-50 text-purple-600 rounded-lg hover:bg-purple-100 transition-colors whitespace-nowrap"
-              >
-                Example: Penjualan
-              </button>
-            </div>
-          </div>
-
-          {/* Context Input */}
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-4">
-            <h2 className="font-semibold text-gray-800 flex items-center gap-2">
-              <Info className="w-5 h-5 text-purple-500" />
-              Context (Recommended)
-            </h2>
-            <textarea
-              value={context}
-              onChange={(e) => setContext(e.target.value)}
-              placeholder="Ini adalah data nilai siswa saya pada ujian sistem persamaan linear dua variabel, saya mau fokus untuk menemukan siswa yang kesusahan dalam pembelajaran ini..."
-              className="w-full h-32 p-4 rounded-xl border border-gray-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all resize-none text-sm"
-            />
-          </div>
-
-          {/* Analyze Button */}
-          <button
-            onClick={handleAnalyze}
-            disabled={isLoading || !inputText}
-            className="w-full py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2"
-          >
-            {isLoading ? (
-              <>
-                <Loader2 className="w-5 h-5 animate-spin" />
-                Analyzing...
-              </>
-            ) : (
-              <>
-                <BarChart2 className="w-5 h-5" />
-                Analyze Data
-              </>
-            )}
-          </button>
-
-          {error && (
-            <div className="p-4 bg-red-50 text-red-600 rounded-xl text-sm">
-              {error}
-            </div>
-          )}
+    <PageWrapper
+      header={{
+        title: "Simple Data Analysis",
+        description: "AI Tool",
+        icon: <BarChart2 className="w-6 h-6 text-cyan-600" />,
+      }}
+    >
+      <div className="space-y-8">
+        {/* Description */}
+        <div className="text-center max-w-2xl mx-auto">
+          <p className="text-gray-600">
+            Upload data Anda atau tempel di bawah untuk menghasilkan wawasan dan visualisasi secara instan.
+            Berguna untuk menganalisis nilai, penjualan, atau hasil survei.
+          </p>
         </div>
 
-        {/* Right Column: Results */}
-        <div className="lg:col-span-2 space-y-6">
-          {result ? (
-            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Left Column: Input */}
+          <div className="lg:col-span-1 space-y-6">
+            
+            {/* Data Input */}
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-4">
+              <div className="flex justify-between items-center">
+                <h2 className="font-semibold text-gray-800 flex items-center gap-2">
+                  <FileText className="w-5 h-5 text-blue-500" />
+                  Input Data
+                </h2>
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  className="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1"
+                >
+                  <Upload className="w-4 h-4" />
+                  Upload File
+                </button>
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleFileUpload}
+                  accept=".txt,.csv,.xlsx,.xls"
+                  className="hidden"
+                />
+              </div>
               
-              {/* Graph Section */}
-              {result.graphData && (
-                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                  <h3 className="text-lg font-semibold mb-6 text-gray-800">
-                    {result.graphTitle || 'Data Visualization'}
-                  </h3>
-                  <div className="w-full overflow-hidden">
-                    {renderGraph()}
-                  </div>
-                </div>
-              )}
+              <textarea
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+                placeholder="Masukkan data Anda di sini..."
+                className="w-full h-64 p-4 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all resize-none font-mono text-sm"
+              />
 
-              {/* Analysis Section */}
-              <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 prose prose-blue max-w-none">
-                <h3 className="text-lg font-semibold mb-4 text-gray-800 not-prose">
-                  AI Analysis & Insights
-                </h3>
-                <div className="text-gray-600 leading-relaxed">
-                  <ReactMarkdown 
-                    remarkPlugins={[remarkGfm]}
-                  >
-                    {result.analysis}
-                  </ReactMarkdown>
-                </div>
+              {/* Example Buttons */}
+              <div className="flex gap-2 overflow-x-auto pb-2">
+                <button
+                  onClick={() => setInputText(EXAMPLE_STUDENT_DATA)}
+                  className="px-3 py-1.5 text-xs bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors whitespace-nowrap"
+                >
+                  Example: Nilai Siswa
+                </button>
+                <button
+                  onClick={() => setInputText(EXAMPLE_SALES_DATA)}
+                  className="px-3 py-1.5 text-xs bg-purple-50 text-purple-600 rounded-lg hover:bg-purple-100 transition-colors whitespace-nowrap"
+                >
+                  Example: Penjualan
+                </button>
               </div>
             </div>
-          ) : (
-            // Empty State
-            <div className="h-full min-h-[400px] flex flex-col items-center justify-center text-gray-400 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200">
-              <BarChart2 className="w-16 h-16 mb-4 opacity-20" />
-              <p className="text-lg font-medium">Ready to analyze</p>
-              <p className="text-sm">Import data to generate insights</p>
+
+            {/* Context Input */}
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-4">
+              <h2 className="font-semibold text-gray-800 flex items-center gap-2">
+                <Info className="w-5 h-5 text-purple-500" />
+                Context (Recommended)
+              </h2>
+              <textarea
+                value={context}
+                onChange={(e) => setContext(e.target.value)}
+                placeholder="Ini adalah data nilai siswa saya pada ujian sistem persamaan linear dua variabel, saya mau fokus untuk menemukan siswa yang kesusahan dalam pembelajaran ini..."
+                className="w-full h-32 p-4 rounded-xl border border-gray-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all resize-none text-sm"
+              />
             </div>
-          )}
+
+            {/* Analyze Button */}
+            <button
+              onClick={handleAnalyze}
+              disabled={isLoading || !inputText}
+              className="w-full py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2"
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  Analyzing...
+                </>
+              ) : (
+                <>
+                  <BarChart2 className="w-5 h-5" />
+                  Analyze Data
+                </>
+              )}
+            </button>
+
+            {error && (
+              <div className="p-4 bg-red-50 text-red-600 rounded-xl text-sm">
+                {error}
+              </div>
+            )}
+          </div>
+
+          {/* Right Column: Results */}
+          <div className="lg:col-span-2 space-y-6">
+            {result ? (
+              <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                
+                {/* Graph Section */}
+                {result.graphData && (
+                  <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <h3 className="text-lg font-semibold mb-6 text-gray-800">
+                      {result.graphTitle || 'Data Visualization'}
+                    </h3>
+                    <div className="w-full overflow-hidden">
+                      {renderGraph()}
+                    </div>
+                  </div>
+                )}
+
+                {/* Analysis Section */}
+                <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 prose prose-blue max-w-none">
+                  <h3 className="text-lg font-semibold mb-4 text-gray-800 not-prose">
+                    AI Analysis & Insights
+                  </h3>
+                  <div className="text-gray-600 leading-relaxed">
+                    <ReactMarkdown 
+                      remarkPlugins={[remarkGfm]}
+                    >
+                      {result.analysis}
+                    </ReactMarkdown>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="h-full min-h-[400px] flex flex-col items-center justify-center text-gray-400 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200">
+                <BarChart2 className="w-16 h-16 mb-4 opacity-20" />
+                <p className="text-lg font-medium">Ready to analyze</p>
+                <p className="text-sm">Import data to generate insights</p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </PageWrapper>
   );
 }

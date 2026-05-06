@@ -74,7 +74,7 @@ export function ChatInterface({ title, description, endpoint = 'elementary', ini
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-100px)] max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+    <div className="flex flex-col h-[calc(100vh-16rem)] lg:h-[calc(100vh-20rem)] max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
       {/* Header */}
       <div className="p-4 border-b bg-gray-50">
         <h1 className="text-xl font-bold text-gray-800 flex items-center gap-2">

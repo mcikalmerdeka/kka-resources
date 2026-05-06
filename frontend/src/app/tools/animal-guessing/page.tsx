@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from 'react';
-import { Gamepad2, Send, Loader2, ArrowLeft, Lightbulb, Trophy, RotateCcw } from 'lucide-react';
-import Link from 'next/link';
+import { Gamepad2, Loader2, Lightbulb, Trophy, RotateCcw } from 'lucide-react';
 import { chatService } from '@/lib/api';
 import { cn } from '@/lib/utils';
+import { PageWrapper } from '@/components/PageWrapper';
 
 interface GameState {
   animal: string;
@@ -58,7 +58,6 @@ Sekarang pilih hewan yang berbeda!`;
         prompt: prompt,
       }, endpoint);
       
-      // Parse response
       const lines = response.response.trim().split('\n');
       let animal = "";
       const clues: string[] = [];
@@ -121,11 +120,8 @@ Sekarang pilih hewan yang berbeda!`;
     if (gameState.gameOver || isClueLoading) return;
 
     setIsClueLoading(true);
-    
-    // Deduct points
     const newPoints = Math.max(0, gameState.points - 10);
     
-    // Check if we need to generate new clue
     if (gameState.shownClues >= gameState.allClues.length) {
       const prompt = `Hewan yang sedang ditebak adalah ${gameState.animal}.
         
@@ -163,183 +159,182 @@ Jawab HANYA dengan petunjuknya saja, jangan tambahkan nomor atau kata-kata lain.
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
-      <div className="max-w-5xl mx-auto">
-        <Link href="/#implementations" className="inline-flex items-center text-gray-600 hover:text-blue-600 mb-6 transition-colors">
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Kembali ke Dashboard
-        </Link>
+    <PageWrapper
+      header={{
+        title: "Animal Guessing Game",
+        description: "AI Tool",
+        icon: <Gamepad2 className="w-6 h-6 text-teal-600" />,
+      }}
+    >
+      <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+        <div className="p-6 border-b bg-teal-50">
+          <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+            <Gamepad2 className="w-8 h-8 text-teal-600" />
+            Tebak Hewan
+          </h1>
+          <p className="text-gray-600 mt-2">Game interaktif di mana AI memberikan petunjuk dan kamu menebak hewannya!</p>
+        </div>
 
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
-          <div className="p-6 border-b bg-indigo-50">
-            <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-              <Gamepad2 className="w-8 h-8 text-indigo-600" />
-              Tebak Hewan
-            </h1>
-            <p className="text-gray-600 mt-2">Game interaktif di mana AI memberikan petunjuk dan kamu menebak hewannya!</p>
-          </div>
+        <div className="p-6">
+          {gameState.gameOver && !gameState.finalMessage ? (
+            // Start Screen
+            <div className="text-center py-12 space-y-8">
+              <div className="space-y-4">
+                <h2 className="text-3xl font-bold text-gray-800">Siap Bermain?</h2>
+                <p className="text-gray-600 max-w-md mx-auto">
+                  Pilih tingkat kesulitan dan mulai petualangan menebak hewanmu!
+                </p>
+              </div>
 
-          <div className="p-6">
-            {gameState.gameOver && !gameState.finalMessage ? (
-              // Start Screen
-              <div className="text-center py-12 space-y-8">
-                <div className="space-y-4">
-                  <h2 className="text-3xl font-bold text-gray-800">Siap Bermain?</h2>
-                  <p className="text-gray-600 max-w-md mx-auto">
-                    Pilih tingkat kesulitan dan mulai petualangan menebak hewanmu!
-                  </p>
+              <div className="flex flex-col items-center gap-4">
+                <div className="flex gap-4">
+                  {["Mudah (SD)", "Menengah (SMP)"].map((diff) => (
+                    <button
+                      key={diff}
+                      onClick={() => setGameState(prev => ({ ...prev, difficulty: diff }))}
+                      className={cn(
+                        "px-6 py-3 rounded-lg border-2 font-medium transition-all",
+                        gameState.difficulty === diff
+                          ? "border-teal-600 bg-teal-50 text-teal-700"
+                          : "border-gray-200 hover:border-teal-300 text-gray-600"
+                      )}
+                    >
+                      {diff}
+                    </button>
+                  ))}
                 </div>
 
-                <div className="flex flex-col items-center gap-4">
-                  <div className="flex gap-4">
-                    {["Mudah (SD)", "Menengah (SMP)"].map((diff) => (
-                      <button
-                        key={diff}
-                        onClick={() => setGameState(prev => ({ ...prev, difficulty: diff }))}
-                        className={cn(
-                          "px-6 py-3 rounded-lg border-2 font-medium transition-all",
-                          gameState.difficulty === diff
-                            ? "border-indigo-600 bg-indigo-50 text-indigo-700"
-                            : "border-gray-200 hover:border-indigo-300 text-gray-600"
-                        )}
-                      >
-                        {diff}
-                      </button>
+                <button
+                  onClick={() => startGame(gameState.difficulty)}
+                  disabled={isLoading}
+                  className="px-8 py-4 bg-teal-600 text-white rounded-xl hover:bg-teal-700 disabled:opacity-50 transition-all transform hover:scale-105 font-bold text-lg flex items-center gap-2 shadow-lg"
+                >
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="w-6 h-6 animate-spin" />
+                      Menyiapkan Game...
+                    </>
+                  ) : (
+                    <>
+                      <Gamepad2 className="w-6 h-6" />
+                      Mulai Game Baru
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          ) : (
+            // Game Screen
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div className="lg:col-span-2 space-y-6">
+                {/* Clues Section */}
+                <div className="bg-teal-50 rounded-xl p-6 border border-teal-100">
+                  <h3 className="text-lg font-bold text-teal-900 mb-4 flex items-center gap-2">
+                    <Lightbulb className="w-5 h-5" />
+                    Petunjuk:
+                  </h3>
+                  <div className="space-y-3">
+                    {gameState.allClues.slice(0, gameState.shownClues).map((clue, i) => (
+                      <div key={i} className="flex gap-3 bg-white p-3 rounded-lg shadow-sm animate-fadeIn">
+                        <span className="font-bold text-teal-500">{i + 1}.</span>
+                        <span className="text-gray-700">{clue}</span>
+                      </div>
                     ))}
                   </div>
-
-                  <button
-                    onClick={() => startGame(gameState.difficulty)}
-                    disabled={isLoading}
-                    className="px-8 py-4 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 disabled:opacity-50 transition-all transform hover:scale-105 font-bold text-lg flex items-center gap-2 shadow-lg"
-                  >
-                    {isLoading ? (
-                      <>
-                        <Loader2 className="w-6 h-6 animate-spin" />
-                        Menyiapkan Game...
-                      </>
-                    ) : (
-                      <>
-                        <Gamepad2 className="w-6 h-6" />
-                        Mulai Game Baru
-                      </>
-                    )}
-                  </button>
                 </div>
-              </div>
-            ) : (
-              // Game Screen
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div className="lg:col-span-2 space-y-6">
-                  {/* Clues Section */}
-                  <div className="bg-indigo-50 rounded-xl p-6 border border-indigo-100">
-                    <h3 className="text-lg font-bold text-indigo-900 mb-4 flex items-center gap-2">
-                      <Lightbulb className="w-5 h-5" />
-                      Petunjuk:
-                    </h3>
-                    <div className="space-y-3">
-                      {gameState.allClues.slice(0, gameState.shownClues).map((clue, i) => (
-                        <div key={i} className="flex gap-3 bg-white p-3 rounded-lg shadow-sm animate-fadeIn">
-                          <span className="font-bold text-indigo-500">{i + 1}.</span>
-                          <span className="text-gray-700">{clue}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
 
-                  {/* Game Over Message */}
-                  {gameState.gameOver && gameState.finalMessage && (
-                    <div className={cn(
-                      "rounded-xl p-6 border-2 animate-fadeIn",
-                      gameState.isWin ? "bg-green-50 border-green-200" : "bg-red-50 border-red-200"
-                    )}>
-                      <div className="whitespace-pre-wrap text-center font-medium text-lg">
-                        {gameState.finalMessage}
-                      </div>
+                {/* Game Over Message */}
+                {gameState.gameOver && gameState.finalMessage && (
+                  <div className={cn(
+                    "rounded-xl p-6 border-2 animate-fadeIn",
+                    gameState.isWin ? "bg-green-50 border-green-200" : "bg-red-50 border-red-200"
+                  )}>
+                    <div className="whitespace-pre-wrap text-center font-medium text-lg">
+                      {gameState.finalMessage}
+                    </div>
+                    <button
+                      onClick={() => setGameState(prev => ({ ...prev, gameOver: true, finalMessage: undefined }))}
+                      className="mt-6 w-full py-3 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 font-medium text-gray-700 flex items-center justify-center gap-2"
+                    >
+                      <RotateCcw className="w-4 h-4" />
+                      Main Lagi
+                    </button>
+                  </div>
+                )}
+
+                {/* Input Area */}
+                {!gameState.gameOver && (
+                  <div className="space-y-4">
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={guess}
+                        onChange={(e) => setGuess(e.target.value)}
+                        onKeyDown={(e) => e.key === 'Enter' && checkGuess()}
+                        placeholder="Ketik tebakanmu di sini..."
+                        className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent text-lg"
+                      />
                       <button
-                        onClick={() => setGameState(prev => ({ ...prev, gameOver: true, finalMessage: undefined }))}
-                        className="mt-6 w-full py-3 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 font-medium text-gray-700 flex items-center justify-center gap-2"
+                        onClick={checkGuess}
+                        disabled={!guess}
+                        className="px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 disabled:opacity-50 transition-colors font-bold"
                       >
-                        <RotateCcw className="w-4 h-4" />
-                        Main Lagi
+                        Tebak!
                       </button>
                     </div>
-                  )}
+                    
+                    <button
+                      onClick={requestMoreClue}
+                      disabled={isClueLoading}
+                      className="w-full py-3 border-2 border-dashed border-teal-300 rounded-lg text-teal-600 hover:bg-teal-50 transition-colors flex items-center justify-center gap-2 font-medium"
+                    >
+                      {isClueLoading ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <Lightbulb className="w-4 h-4" />
+                      )}
+                      Minta Petunjuk Tambahan (-10 poin)
+                    </button>
+                  </div>
+                )}
+              </div>
 
-                  {/* Input Area */}
-                  {!gameState.gameOver && (
-                    <div className="space-y-4">
-                      <div className="flex gap-2">
-                        <input
-                          type="text"
-                          value={guess}
-                          onChange={(e) => setGuess(e.target.value)}
-                          onKeyDown={(e) => e.key === 'Enter' && checkGuess()}
-                          placeholder="Ketik tebakanmu di sini..."
-                          className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-lg"
-                        />
-                        <button
-                          onClick={checkGuess}
-                          disabled={!guess}
-                          className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition-colors font-bold"
-                        >
-                          Tebak!
-                        </button>
-                      </div>
-                      
-                      <button
-                        onClick={requestMoreClue}
-                        disabled={isClueLoading}
-                        className="w-full py-3 border-2 border-dashed border-indigo-300 rounded-lg text-indigo-600 hover:bg-indigo-50 transition-colors flex items-center justify-center gap-2 font-medium"
-                      >
-                        {isClueLoading ? (
-                          <Loader2 className="w-4 h-4 animate-spin" />
-                        ) : (
-                          <Lightbulb className="w-4 h-4" />
-                        )}
-                        Minta Petunjuk Tambahan (-10 poin)
-                      </button>
-                    </div>
-                  )}
+              {/* Sidebar */}
+              <div className="space-y-6">
+                <div className="bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl p-6 text-white text-center shadow-lg">
+                  <div className="text-teal-100 text-sm font-medium mb-1">POIN KAMU</div>
+                  <div className="text-5xl font-bold flex items-center justify-center gap-2">
+                    <Trophy className="w-8 h-8 text-yellow-300" />
+                    {gameState.points}
+                  </div>
                 </div>
 
-                {/* Sidebar */}
-                <div className="space-y-6">
-                  <div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl p-6 text-white text-center shadow-lg">
-                    <div className="text-indigo-100 text-sm font-medium mb-1">POIN KAMU</div>
-                    <div className="text-5xl font-bold flex items-center justify-center gap-2">
-                      <Trophy className="w-8 h-8 text-yellow-300" />
-                      {gameState.points}
-                    </div>
-                  </div>
-
-                  <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
-                    <h3 className="font-bold text-gray-800 mb-3">Cara Bermain:</h3>
-                    <ul className="space-y-2 text-sm text-gray-600">
-                      <li className="flex gap-2">
-                        <span>1.</span>
-                        <span>AI akan memberikan 3 petunjuk awal.</span>
-                      </li>
-                      <li className="flex gap-2">
-                        <span>2.</span>
-                        <span>Tebak nama hewan berdasarkan petunjuk.</span>
-                      </li>
-                      <li className="flex gap-2">
-                        <span>3.</span>
-                        <span>Setiap petunjuk tambahan mengurangi 10 poin.</span>
-                      </li>
-                      <li className="flex gap-2">
-                        <span>4.</span>
-                        <span>Kamu hanya punya <strong>satu kali kesempatan</strong> untuk menebak!</span>
-                      </li>
-                    </ul>
-                  </div>
+                <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
+                  <h3 className="font-bold text-gray-800 mb-3">Cara Bermain:</h3>
+                  <ul className="space-y-2 text-sm text-gray-600">
+                    <li className="flex gap-2">
+                      <span>1.</span>
+                      <span>AI akan memberikan 3 petunjuk awal.</span>
+                    </li>
+                    <li className="flex gap-2">
+                      <span>2.</span>
+                      <span>Tebak nama hewan berdasarkan petunjuk.</span>
+                    </li>
+                    <li className="flex gap-2">
+                      <span>3.</span>
+                      <span>Setiap petunjuk tambahan mengurangi 10 poin.</span>
+                    </li>
+                    <li className="flex gap-2">
+                      <span>4.</span>
+                      <span>Kamu hanya punya <strong>satu kali kesempatan</strong> untuk menebak!</span>
+                    </li>
+                  </ul>
                 </div>
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
-    </div>
+    </PageWrapper>
   );
 }

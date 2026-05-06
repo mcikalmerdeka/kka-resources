@@ -2,9 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Bot, BookOpen, Code, Calculator, Languages, BrainCircuit, HelpCircle, BarChart2, LayoutGrid, Brain, Leaf, Scale, Unlock, Smartphone, Copyright, Ghost, ExternalLink, Gamepad2 } from 'lucide-react';
+import { Bot, BookOpen, Code, Calculator, Languages, BrainCircuit, HelpCircle, BarChart2, LayoutGrid, Brain, Leaf, Scale, Unlock, Smartphone, Copyright, Ghost, ExternalLink, Gamepad2, ChevronDown } from 'lucide-react';
 import { GlassDonut } from '@/components/GlassDonut';
-import { GithubIcon, LinkedinIcon, InstagramIcon } from '@/components/Icons';
 import { ToolCard } from '@/components/ToolCard';
 import { TheoryCard } from '@/components/TheoryCard';
 import { cn } from '@/lib/utils';
@@ -162,15 +161,15 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="bg-gray-50">
       {/* Hero Section */}
-      <section className="relative overflow-hidden h-[900px]">
+      <section className="relative overflow-hidden min-h-[calc(100vh-5rem)] lg:min-h-[900px]">
         <GlassDonut />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
-          <div className="grid grid-cols-1 lg:grid-cols-2 w-full items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full min-h-[calc(100vh-5rem)] lg:min-h-[900px] flex items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 w-full items-center gap-8 lg:gap-12">
             {/* Left: Text */}
-            <div className="flex flex-col items-start z-20 space-y-6">
+            <div className="flex flex-col items-start z-20 space-y-6 pt-20 lg:pt-0">
                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-50/80 border border-blue-100 rounded-full backdrop-blur-sm">
                   <span className="relative flex h-2.5 w-2.5">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
@@ -179,44 +178,46 @@ export default function Home() {
                   <span className="text-blue-600 text-xs font-bold tracking-wider uppercase">Indonesian Curriculum • Phase C-F</span>
                </div>
 
-               <h1 className="text-7xl md:text-8xl font-extrabold text-slate-900 tracking-tighter leading-[1.1]" style={{ fontFamily: 'var(--font-playfair)' }}>
+               <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold text-slate-900 tracking-tighter leading-[1.1]" style={{ fontFamily: 'var(--font-playfair)' }}>
                   KKA <br />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Laboratory.</span>
                </h1>
 
-               <p className="text-lg text-slate-600 font-normal max-w-md">
+               <p className="text-base sm:text-lg text-slate-600 font-normal max-w-md">
                   Explore the world of Artificial Intelligence with our interactive learning tools.
                </p>
 
-               {/* Quick actions */}
-               <div className="flex items-center gap-4 pt-4">
+               {/* Scroll down CTAs */}
+               <div className="flex flex-wrap items-center gap-3 pt-4">
                 <button
-                  onClick={() => setActiveTab('implementations')}
-                  className={cn(
-                    "inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all cursor-pointer",
-                    activeTab === 'implementations'
-                      ? "bg-slate-900 text-white shadow-xl hover:bg-slate-800"
-                      : "bg-white/80 backdrop-blur-md border border-white text-slate-700 hover:bg-white shadow-sm"
-                  )}
+                  onClick={() => {
+                    setActiveTab('implementations');
+                    setTimeout(() => {
+                      document.getElementById('content-section')?.scrollIntoView({ behavior: 'smooth' });
+                    }, 50);
+                  }}
+                  className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 sm:px-6 sm:py-3 text-sm font-medium transition-all cursor-pointer bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg hover:shadow-xl hover:scale-105"
                 >
                   <LayoutGrid className="h-4 w-4" />
-                  AI Implementations
+                  Explore AI Tools
+                  <ChevronDown className="h-3.5 w-3.5 animate-bounce" />
                 </button>
                 <button
-                  onClick={() => setActiveTab('theory')}
-                  className={cn(
-                    "inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all cursor-pointer",
-                    activeTab === 'theory'
-                      ? "bg-slate-900 text-white shadow-xl hover:bg-slate-800"
-                      : "bg-white/80 backdrop-blur-md border border-white text-slate-700 hover:bg-white shadow-sm"
-                  )}
+                  onClick={() => {
+                    setActiveTab('theory');
+                    setTimeout(() => {
+                      document.getElementById('content-section')?.scrollIntoView({ behavior: 'smooth' });
+                    }, 50);
+                  }}
+                  className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 sm:px-6 sm:py-3 text-sm font-medium transition-all cursor-pointer bg-white/90 backdrop-blur-md border border-white text-slate-700 hover:bg-white shadow-sm hover:shadow-md"
                 >
                   <BookOpen className="h-4 w-4" />
-                  AI Basic Theory
+                  Learn Theory
+                  <ChevronDown className="h-3.5 w-3.5 animate-bounce" />
                 </button>
                </div>
 
-               <div className="pt-6">
+               <div className="pt-4">
                  <Link 
                    href="/contributions"
                    className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors group"
@@ -235,6 +236,40 @@ export default function Home() {
 
       {/* Content Section */}
       <div id="content-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        {/* Section Header */}
+        <div className="mb-8">
+          <div className="flex items-center gap-4 mb-4">
+            <button
+              onClick={() => setActiveTab('implementations')}
+              className={cn(
+                "text-lg sm:text-xl font-bold transition-colors pb-2 border-b-2",
+                activeTab === 'implementations'
+                  ? "text-slate-900 border-blue-600"
+                  : "text-gray-400 border-transparent hover:text-gray-600"
+              )}
+            >
+              AI Tools
+            </button>
+            <button
+              onClick={() => setActiveTab('theory')}
+              className={cn(
+                "text-lg sm:text-xl font-bold transition-colors pb-2 border-b-2",
+                activeTab === 'theory'
+                  ? "text-slate-900 border-blue-600"
+                  : "text-gray-400 border-transparent hover:text-gray-600"
+              )}
+            >
+              Theory
+            </button>
+          </div>
+          <p className="text-gray-500 text-sm sm:text-base">
+            {activeTab === 'implementations' 
+              ? "Interactive AI tools designed for Indonesian students Phase C-F. Try them out!"
+              : "Learn the fundamental concepts behind Artificial Intelligence."
+            }
+          </p>
+        </div>
+
         {activeTab === 'implementations' ? (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 animate-in fade-in slide-in-from-bottom-4 duration-500">
             {tools.map((tool) => (
@@ -249,27 +284,6 @@ export default function Home() {
           </div>
         )}
       </div>
-      
-      {/* Footer */}
-      <footer className="bg-white border-t mt-auto">
-        <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center">
-          <div className="flex justify-center space-x-6 mb-4">
-            <a href="https://www.linkedin.com/in/mcikalmerdeka" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-600 transition-colors">
-              <LinkedinIcon className="w-6 h-6" />
-              <span className="sr-only">LinkedIn</span>
-            </a>
-            <a href="https://github.com/mcikalmerdeka" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-900 transition-colors">
-              <GithubIcon className="w-6 h-6" />
-              <span className="sr-only">GitHub</span>
-            </a>
-            <a href="https://www.instagram.com/cikalmerdeka/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-pink-600 transition-colors">
-              <InstagramIcon className="w-6 h-6" />
-              <span className="sr-only">Instagram</span>
-            </a>
-          </div>
-          <p className="text-gray-400 text-sm">&copy; 2025 Koding dan Kecerdasan Artificial. Open Source Education.</p>
-        </div>
-      </footer>
     </div>
   );
 }
