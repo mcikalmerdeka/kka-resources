@@ -36,6 +36,7 @@ Load-EnvFile
 # Deploy to Cloud Run using environment variables
 gcloud run deploy llm-proxy `
   --source . `
+  --project $env:GOOGLE_PROJECT_ID `
   --region us-central1 `
   --allow-unauthenticated `
   --set-env-vars OPENAI_API_KEY=$env:OPENAI_API_KEY `
