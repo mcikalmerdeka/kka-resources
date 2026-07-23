@@ -75,5 +75,5 @@ design-inspirations/
 .gcloud/
 .firebase/
 
-# Ignore backend folder
-# backend/
+# Opencode
+.omo/
