@@ -21,7 +21,7 @@ const navItems: NavItem[] = [
   },
   {
     label: 'AI Tools',
-    href: '/#implementations',
+    href: '/tools',
     icon: <LayoutGrid className="w-4 h-4" />,
     children: [
       { label: 'Simple Chatbot', href: '/tools/chatbot' },
@@ -36,7 +36,7 @@ const navItems: NavItem[] = [
   },
   {
     label: 'Theory',
-    href: '/#theory',
+    href: '/theory',
     icon: <BookOpen className="w-4 h-4" />,
     children: [
       { label: 'How AI is Trained', href: '/theory/how-ai-is-trained' },
@@ -121,13 +121,14 @@ export function Navigation() {
               <div key={item.label} className="relative">
                 {item.children ? (
                   <div
-                    className="relative"
+                    className="relative flex items-center"
                     onMouseEnter={() => setOpenDropdown(item.label)}
                     onMouseLeave={() => setOpenDropdown(null)}
                   >
-                    <button
+                    <Link
+                      href={item.href}
                       className={cn(
-                        'flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all',
+                        'flex items-center gap-2 px-3 py-2 rounded-l-lg text-sm font-medium transition-all',
                         isActive(item.href)
                           ? 'text-blue-600 bg-blue-50'
                           : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
@@ -135,12 +136,23 @@ export function Navigation() {
                     >
                       {item.icon}
                       {item.label}
+                    </Link>
+                    <button
+                      onClick={() => handleDropdownToggle(item.label)}
+                      className={cn(
+                        'flex items-center px-1.5 py-2 rounded-r-lg text-sm font-medium transition-all',
+                        isActive(item.href)
+                          ? 'text-blue-600 bg-blue-50'
+                          : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                      )}
+                      aria-label={`Toggle ${item.label} menu`}
+                    >
                       <ChevronDown className={cn(
                         "w-3 h-3 transition-transform",
                         openDropdown === item.label && "rotate-180"
                       )} />
                     </button>
-                    
+
                     {/* Dropdown */}
                     {openDropdown === item.label && (
                       <div className="absolute top-full left-0 mt-1 w-56 bg-white rounded-xl shadow-lg border border-gray-100 py-2 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
@@ -198,25 +210,38 @@ export function Navigation() {
               <div key={item.label}>
                 {item.children ? (
                   <div>
-                    <button
-                      onClick={() => handleDropdownToggle(item.label)}
+                    <div
                       className={cn(
-                        'w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition-all',
+                        'flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition-all',
                         isActive(item.href)
                           ? 'text-blue-600 bg-blue-50'
                           : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
                       )}
                     >
-                      <span className="flex items-center gap-2">
+                      <Link
+                        href={item.href}
+                        className="flex items-center gap-2"
+                      >
                         {item.icon}
                         {item.label}
-                      </span>
-                      <ChevronDown className={cn(
-                        "w-4 h-4 transition-transform",
-                        openDropdown === item.label && "rotate-180"
-                      )} />
-                    </button>
-                    
+                      </Link>
+                      <button
+                        onClick={() => handleDropdownToggle(item.label)}
+                        className={cn(
+                          'p-1 rounded-lg transition-colors',
+                          isActive(item.href)
+                            ? 'text-blue-600 hover:bg-blue-100'
+                            : 'text-gray-600 hover:bg-gray-100'
+                        )}
+                        aria-label={`Toggle ${item.label} menu`}
+                      >
+                        <ChevronDown className={cn(
+                          "w-4 h-4 transition-transform",
+                          openDropdown === item.label && "rotate-180"
+                        )} />
+                      </button>
+                    </div>
+
                     {openDropdown === item.label && (
                       <div className="ml-4 mt-1 space-y-1 border-l-2 border-gray-100 pl-4">
                         {item.children.map((child) => (

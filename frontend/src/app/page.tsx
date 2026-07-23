@@ -2,139 +2,15 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Bot, BookOpen, Code, Calculator, Languages, BrainCircuit, HelpCircle, BarChart2, LayoutGrid, Brain, Leaf, Scale, Unlock, Smartphone, Copyright, Ghost, ExternalLink, Gamepad2, ChevronDown } from 'lucide-react';
+import { LayoutGrid, BookOpen, ExternalLink, ChevronDown } from 'lucide-react';
 import { GlassDonut } from '@/components/GlassDonut';
 import { ToolCard } from '@/components/ToolCard';
 import { TheoryCard } from '@/components/TheoryCard';
+import { tools } from '@/data/tools';
+import { theories } from '@/data/theories';
 import { cn } from '@/lib/utils';
 
 export default function Home() {
-  const tools = [
-    {
-      title: "Simple Chatbot",
-      description: "Basic Q&A chatbot to learn about AI conversations. Perfect for beginners.",
-      href: "/tools/chatbot",
-      icon: <Bot className="w-6 h-6" />,
-      phase: "C",
-      color: "bg-blue-500"
-    },
-    {
-      title: "Story Generator",
-      description: "Create creative stories with AI. Learn about prompts and creativity.",
-      href: "/tools/story-generator",
-      icon: <BookOpen className="w-6 h-6" />,
-      phase: "C",
-      color: "bg-purple-500"
-    },
-    {
-      title: "Code Explainer",
-      description: "Understand programming code with AI explanations.",
-      href: "/tools/code-explainer",
-      icon: <Code className="w-6 h-6" />,
-      phase: "D-F",
-      color: "bg-green-500"
-    },
-    {
-      title: "Math Tutor",
-      description: "Get step-by-step help with math problems.",
-      href: "/tools/math-tutor",
-      icon: <Calculator className="w-6 h-6" />,
-      phase: "C-E",
-      color: "bg-orange-500"
-    },
-    {
-      title: "Language Translator",
-      description: "Translate between languages with cultural insights.",
-      href: "/tools/translator",
-      icon: <Languages className="w-6 h-6" />,
-      phase: "C-D",
-      color: "bg-pink-500"
-    },
-    {
-      title: "Quiz Generator",
-      description: "Create custom educational quizzes on any topic.",
-      href: "/tools/quiz-generator",
-      icon: <HelpCircle className="w-6 h-6" />,
-      phase: "D-F",
-      color: "bg-red-500"
-    },
-    {
-      title: "Animal Guessing Game",
-      description: "Interactive game where AI guesses animals.",
-      href: "/tools/animal-guessing",
-      icon: <BrainCircuit className="w-6 h-6" />,
-      phase: "C",
-      color: "bg-teal-500"
-    },
-    {
-      title: "Simple Data Analysis",
-      description: "Analyze data and generate insights with AI. Supports text and file inputs.",
-      href: "/tools/data-analysis",
-      icon: <BarChart2 className="w-6 h-6" />,
-      phase: "E-F",
-      color: "bg-cyan-500"
-    }
-  ];
-
-  const theories = [
-    {
-      title: "How AI is Trained",
-      description: "Learn the basics of how Artificial Intelligence learns from data.",
-      href: "/theory/how-ai-is-trained",
-      icon: <Brain className="w-6 h-6" />,
-      color: "bg-indigo-500"
-    },
-    {
-      title: "AI Environmental Concern",
-      description: "Understand the environmental impact of training and using AI models.",
-      href: "/theory/environmental-concern",
-      icon: <Leaf className="w-6 h-6" />,
-      color: "bg-emerald-500"
-    },
-    {
-      title: "AI Bias & Fairness",
-      description: "Why AI can be unfair and how to fix it.",
-      href: "/theory/ai-bias",
-      icon: <Scale className="w-6 h-6" />,
-      color: "bg-rose-500"
-    },
-    {
-      title: "Open vs Closed Source AI",
-      description: "Understand the difference between open (like DeepSeek) and closed AI.",
-      href: "/theory/open-vs-closed",
-      icon: <Unlock className="w-6 h-6" />,
-      color: "bg-cyan-500"
-    },
-    {
-      title: "Social Media Algorithms",
-      description: "Why your TikTok feed is different from your friends'.",
-      href: "/theory/social-media-algorithms",
-      icon: <Smartphone className="w-6 h-6" />,
-      color: "bg-purple-600"
-    },
-    {
-      title: "AI & Copyright Issues",
-      description: "Who owns AI art? The legal battle between artists and AI.",
-      href: "/theory/ai-copyright",
-      icon: <Copyright className="w-6 h-6" />,
-      color: "bg-amber-600"
-    },
-    {
-      title: "AI Hallucinations",
-      description: "When AI confidently lies. Why it happens and how to spot it.",
-      href: "/theory/ai-hallucinations",
-      icon: <Ghost className="w-6 h-6" />,
-      color: "bg-red-600"
-    },
-    {
-      title: "NVIDIA AI Revolution",
-      description: "From gaming graphics to the engine of the AI revolution.",
-      href: "/theory/nvidia-ai-revolution",
-      icon: <Gamepad2 className="w-6 h-6" />,
-      color: "bg-green-600"
-    }
-  ];
-
   const [activeTab, setActiveTab] = useState<'implementations' | 'theory'>('implementations');
 
   useEffect(() => {
